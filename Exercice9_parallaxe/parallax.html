@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <title>Parallax</title>
+        
+        <style>
+            body{
+                padding: 0;
+                margin: 0;
+            }
+            
+            .cadre{
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+            }
+            .zoneParallax{
+                width: 280vh;
+                height: 140vh;
+                position: absolute;
+                left: 50%;
+                top: 100%;
+                transform: translate(-50%,-100%);
+                overflow: hidden;
+                background: #eee;
+            }
+            
+            .zoneParallax .parallax{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                
+                transition: 0.1s linear;
+                transition-property: left,top;
+                
+            }
+            .zoneParallax .parallax img{
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .zoneParallax .obj3{
+                width: calc(100% * 1.0);
+                height: calc(100% * 1.0);
+            }
+            .zoneParallax .obj4{
+                width: calc(10% * 1.0);
+                height: calc(20% * 1.0);
+            }
+            .zoneParallax .obj5{
+                width: calc(91.32% * 1.0);
+                height: calc(45% * 1.0);
+            }
+            .zoneParallax .obj6{
+                width: calc(100% * 1.0);
+                height: calc(47.6% * 1.0);
+            }
+            .zoneParallax .obj7{
+                width: calc(95.84% * 1.0);
+                height: calc(48.76% * 1.0);
+            }
+            .zoneParallax .obj8{
+                width: calc(100% * 1.0);
+                height: calc(80% * 1.0);
+            }
+
+            #oiseau{
+                position: absolute;
+                width: 90px;
+                height: 100px;
+                background-image: url(images/bird.png);
+                background-size: cover;
+                margin-top: 10%;
+                margin-left: 10%;
+                cursor: pointer;
+                transition-duration: 4s;
+            }
+
+        </style>
+        
+    </head>
+    <body>
+        <div>
+            <h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+        </div>
+        <div class="cadre">
+
+            <div class="zoneParallax">
+                
+                
+                <div class="parallax obj3" data-move-x="-2" data-move-y="-1.5"  data-x="55" data-y="53"><img src="images/05.png" /></div> 
+                <div class="parallax obj4" data-move-x="-3" data-move-y="-8"    data-x="50" data-y="75"><img src="images/06.png" /></div>
+                <div class="parallax obj5" data-move-x="-4" data-move-y="-6"  data-x="42" data-y="700"><img src="images/04.png" /></div>
+                <div class="parallax obj6" data-move-x="-5" data-move-y="-4"    data-x="50" data-y="65"><img src="images/03.png" /></div>
+                <div class="parallax obj7" data-move-x="-6" data-move-y="-3"  data-x="53" data-y="80"><img src="images/02.png" /></div>
+                <div class="parallax obj8" data-move-x="-12" data-move-y="0"     data-x="50" data-y="72"><img src="images/01.png" /></div>
+                
+            </div>
+
+            <div id="oiseau">
+               
+            </div>
+
+        </div>
+        
+        <script type="text/javascript">
+            
+            const zoneParallax = document.querySelectorAll('.cadre')
+            
+            zoneParallax.forEach(zone=>{
+                const parallax = zone.querySelectorAll('.parallax')
+                
+                const move = {
+                    left:0,
+                    top:0
+                }
+
+                window.addEventListener('mousemove',e=>{
+                    move.left = (e.pageX-zone.offsetLeft) / zone.offsetWidth * 2 - 1
+                    move.top = (e.pageY-zone.offsetTop) / zone.offsetHeight * 2 - 1
+                    
+                    moveOBJ()
+                })
+
+
+                const moveOBJ = () => {
+
+                    parallax.forEach(elem=>{
+                        const deltaX = parseFloat(elem.getAttribute('data-move-x'))
+                        const deltaY = parseFloat(elem.getAttribute('data-move-y'))
+                        const x = parseFloat(elem.getAttribute('data-x'))
+                        const y = parseFloat(elem.getAttribute('data-y'))
+                        elem.style.left = x + move.left*deltaX + "%"
+                        elem.style.top = y + move.top*deltaY + "%"
+                    })
+
+                }
+                moveOBJ()
+            })
+
+            let bird = document.querySelector('#oiseau')
+            let rotate = "45deg"
+            bird.addEventListener('mouseover', function(){
+                bird.style.marginLeft = "120%"
+                bird.style.marginTop= "30%"
+                bird.style.tranform= "rotate"+rotate
+                
+            })
+
+            
+            
+            
+        </script>
+    </body>
+</html>

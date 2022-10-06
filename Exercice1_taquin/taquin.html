@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<style>
+		.piece, .piececachee{
+			text-align: center;
+			line-height: 120px;
+			font-size: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+	</div>
+	
+	<div class="container" style="position: relative; display: block; width: 100%;max-width: 480px; height: auto; margin: auto; font-family: 'Lato', Calibri, Arial, sans-serif">
+		<h1>Jeu du taquin</h1>
+		<div class="chrono">Chrono :</div>
+		<button id="jouer" >Jouer</button>
+		<button id="melange"> Melanger</button>
+		<div id="jeu" style="position: relative ;width: 480px;height: 480px;margin-top: 10px; display: flex;" >
+			
+			<div class="piececachee" place ="0" style="position: absolute; display:block; cursor: pointer ; left:0; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122); visibility: hidden;"></div>
+			<div class="piece" place ="1" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">1</div>
+			<div class="piece" place ="2" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">2</div>
+			<div class="piece" place ="3" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">3</div>
+			<div class="piece" place ="4" style="position: absolute; display:block; cursor: pointer ; left:0; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">4</div>
+			<div class="piece" place ="5" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">5</div>
+			<div class="piece" place ="6" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">6</div>
+			<div class="piece" place ="7" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">7</div>
+			<div class="piece" place ="8" style="position: absolute; display:block; cursor: pointer ; left:0; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">8</div>
+			<div class="piece" place ="9" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">9</div>
+			<div class="piece" place ="10" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">10</div>
+			<div class="piece" place ="11" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">11</div>
+			<div class="piece" place ="12" style="position: absolute; display:block; cursor: pointer ; left:0; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">12</div>
+			<div class="piece" place ="13" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">13</div>
+			<div class="piece" place ="14" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">14</div>
+			<div class="piece" place ="15" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">15</div>
+			
+		</div>
+	</div>
+	<script type="text/javascript">
+
+		function getRandomInt(max) {
+		return Math.floor(Math.random() * max);
+		} 
+        const btnStart = document.querySelector('#jouer')
+		const btnMix = document.querySelector("#melange")
+		let heures = 0
+		let minutes = 0
+		let secondes = 0
+
+
+		const jeu = document.querySelector("#jeu")
+		console.log(jeu)
+
+		const pieces = jeu.querySelectorAll(".piece")
+		console.log(pieces)
+
+		
+		var bonOrdre=[ 1, 2, 3, 4, 5, 6 ,7, 8, 9, 10, 11, 12, 13, 14, 15]
+		
+		let tab=[]
+
+		pieces.forEach(element => {
+			
+			element.addEventListener("click" , function(e){
+
+				
+
+				// retourne l'attribut place dans la case 
+				const nb = element.getAttribute('place')
+				pieces[element.getAttribute('place')-1].innerHTML= nb
+
+				//vérifie la pièce cliquée
+				console.log('Numéro de pièce cliquée :'+element.getAttribute('place'))
+
+				//récupère la pièce cachée et sa position initiale
+				const cachee = jeu.querySelector('.piececachee')
+				var posLeftCachee = parseInt(cachee.style['left']) 
+				var posTopCachee = parseInt(cachee.style['top'])
+
+				console.log("Left cachée initiale:"+posLeftCachee+" px")
+				console.log("Top cachée initiale:"+posTopCachee+" px")
+
+
+				// récupère la position initiale de la touche cliquée
+				var mleft = parseInt(element.style['left'])
+				var mtop = parseInt(element.style['top'])
+
+				console.log("Left initial cliquée :"+mleft+" px")
+				console.log("Top initial cliquée :"+mtop+" px")
+
+				if(
+				((posLeftCachee-mleft) == 120 && posTopCachee == mtop) || 
+				((posLeftCachee-mleft) == -120 && posTopCachee == mtop) ||
+				((posTopCachee-mtop) == 120 && posLeftCachee == mleft) ||
+				((posTopCachee-mtop) == -120 && posLeftCachee == mleft)
+				) 
+				{
+					
+					cachee.style.left = mleft+'px'
+					cachee.style.top = mtop+'px'
+					//attribue la position de la touche cliquée à la touche cachée
+
+					pieces[element.getAttribute('place')-1].style.left = `${posLeftCachee}`+'px' 
+					pieces[element.getAttribute('place')-1].style.top = `${posTopCachee}`+'px'
+					// la pièce cliquée prend la place de la pièce cachée
+					console.error('deplacement effectué')
+
+				}else{
+					console.error('déplacement non autorisé')
+				}
+
+				
+			
+			})
+			
+		})
+
+		//chrono 
+		let timeout;
+		
+		let estArrete =true;
+
+		const demarrer = () =>{
+		if(estArrete){
+			estArrete =false
+			defilerTemps()
+		}
+		const arreter = ()=>{
+		if(!estArrete){
+			estArrete = true
+			clearTimeout(timeout)
+		}
+
+		const defilerTemps = ()=>{
+		if(estArrete) return
+
+		secondes = parseInt(secondes)
+		minutes = parseInt(minutes)
+		heures =parseInt(heures)
+		//sécuriser les valeurs pour n'avoir que des entiers
+
+		secondes ++ // ajouter une seconde
+		if(secondes ==60){
+			minutes ++
+			secondes =0 
+			// les secondes passent à 0 et les minutes passent à +1 une fois les secondes passant les 60
+		}
+		if(minutes == 60){
+			heures++
+			minutes = 0
+			// les minutes passent à 0 et les heures passent à +1 une fois les minutes passant les 60
+		}
+
+		//les zéro à l'affichage
+		if(secondes<10){
+			secondes = "0"+secondes
+		}
+		if(minutes<10){
+			minutes = "0"+minutes
+		}
+		if(heures<10){
+			heures = "0"+heures
+		}
+
+		chrono.textContent= `${heures}:${minutes}:${secondes}` 
+		//insertion des nouvelles valeur dans l'html avec textContent
+
+		timeout = setTimeout(defilerTemps,1000)
+		// Explication setTimeout(): permet de définir un minuteur qui exécute une fonction (ici defilerTemps) ou un code donné après la fin du délai indiqué (1000)
+
+	}
+
+	const reset = ()=>{
+		chrono.textContent ="00:00:00"
+		estArrete =true
+		heures =0
+		minutes =0
+		secondes =0
+		clearTimeout(timeout)
+
+	} //remise à zéro des valeurs et effacement du timeout avec clearTimeout()
+
+	startBtn.addEventListener("click",demarrer)
+	stopBtn.addEventListener("click",arreter)
+	resetBtn.addEventListener("click",reset)
+	// appel des différentes fonction selon le rôle de chaque bouton
+
+	}
+
+
+	
+}
+
+
+
+
+		
+		
+
+
+		
+
+
+	</script>
+</body>
+</html>

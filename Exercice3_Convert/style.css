@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 80%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    margin-top: 300px;
+}
+#dest{
+    margin-top: 20px;
+}
+h2{
+    margin-bottom: 20px;
+}
+input{
+    height: 30px;
+    border-radius: 20px;
+    width: 50%;
+    padding: 10px;
+}
+input[type='submit']{
+    margin-top: 20px;
+    width: 200px;
+    cursor: pointer;
+}

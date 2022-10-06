@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .body{
+            width: 100%;
+
+        }
+        .container{
+            width: 60%;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 18pt;
+        }
+    </style>
+</head>
+<body>
+    <div>
+		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+	</div>
+    <div class="container">
+        <h1>Jeu du Blackjack</h1>
+        <h3>Cartes de l'ordinateur</h3>
+        <div class="cartesOrdi">
+           
+
+        </div>
+        <h3>Vos cartes </h3>
+        <div class="cartesPerso">
+           
+            
+        </div>
+        <br>
+        <div class="mise">
+           Pot : Vous avez 
+            <div id="pot"></div>
+            <label for="mise">Mise :</label>
+            <input type="number" name="mise" id="mise" placeholder="Mise">
+        </div>
+        <br>
+        <button id="piocher"> Piocher </button>
+        <button id="rester"> Rester </button>
+        <button id="play"> Jouer </button>
+    </div>
+
+    <script>
+
+        
+
+        let paquet = [
+             'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠',
+             'Q♠', 'K♠', 'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦',
+             '10♦', 'J♦', 'Q♦', 'K♦', 'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣',
+             '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♥', '2♥', '3♥', '4♥', '5♥',
+             '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥'
+        ]
+
+        var paquetRestant = paquet.slice(0)
+
+        var paquetAleaBanque = []
+        var paquetAleaJoueur =  []
+       
+
+        let porteFeuille = 100
+        const pot = document.querySelector('#pot')
+        pot.innerHTML = porteFeuille+"€"
+
+        const btnPioche = document.querySelector('#piocher')
+        const btnRester = document.querySelector('#rester')
+        const btnJouer = document.querySelector('#play')
+        
+        const cartesOrdi = document.querySelector('.cartesOrdi')
+        const cartesJoueur = document.querySelector('.cartesPerso')
+
+        let gagné = false
+       
+
+        
+        btnJouer.addEventListener('click',function(){
+            
+                while(paquetAleaBanque.length<1){
+                    paquetAleaBanque.push(paquetRestant.splice(Math.floor(Math.random()*paquetRestant.length),1)[0]);
+                }
+                while(paquetAleaJoueur.length<2){
+                    paquetAleaJoueur.push(paquetRestant.splice(Math.floor(Math.random()*paquetRestant.length),1)[0]);
+                }
+            
+            
+            
+            
+            cartesOrdi.innerHTML = paquetAleaBanque
+            cartesJoueur.innerHTML = paquetAleaJoueur
+            
+           
+            console.log(paquet)
+            console.log(paquetAleaBanque)
+            console.log(paquetAleaJoueur)
+            console.log(paquetRestant)
+
+            
+           
+           
+           
+        
+            
+            
+            
+            btnPioche.addEventListener('click', function(){
+                console.log('pioche')
+                
+                    paquetAleaJoueur.push(paquetRestant.splice(Math.floor(Math.random()*paquetRestant.length),1)[0]);
+
+                    
+                    console.log(paquetAleaBanque)
+                    console.log(paquetAleaJoueur)
+                    
+
+                cartesJoueur.innerHTML = paquetAleaJoueur
+
+                
+                
+            })
+
+            btnRester.addEventListener('click', function(){
+                console.log('tapis')
+                paquetAleaBanque.push(paquetRestant.splice(Math.floor(Math.random()*paquetRestant.length),1)[0]);
+
+                    console.log(paquetAleaBanque)
+                    console.log(paquetAleaJoueur)
+
+                    cartesOrdi.innerHTML = paquetAleaBanque
+                
+                    //calculer les points ??????
+                    for(let i=0; i<paquetAleaJoueur.lenght; i++){
+                    console.log('toto')
+                    let valeur
+                    let val = paquetAleaJoueur[i].substring(0,1)
+                    let val2 = paquetAleaJoueur[i].substring(1,1)
+                        if(val = "2"){
+                            valeur = valeur + 2
+                        }
+                        if(val = "3"){
+                            valeur = valeur+ 3
+                        }
+                        if(val = "4"){
+                            valeur = valeur+ 4
+                        }
+                        if(val = "5"){
+                            valeur = valeur+ 5
+                        }
+                        if(val = "6"){
+                            valeur = valeur+ 6
+                        }
+                        if(val = "7"){
+                            valeur = valeur + 7
+                        }
+                        if(val = "8"){
+                            valeur = valeur+ 8
+                        }
+                        if(val = "9"){
+                            valeur = valeur+ 9
+                        }
+                        if(val = "A"){
+                            if(val2 = "♦"){
+                                if(valeur<16){
+                                    valeur = valeur+ 10
+                                }else{
+                                    valeur = valeur+ 1
+                                }
+                            }else{
+                                valeur =valeur+ 10
+                            }
+                            
+                        }
+                        if(val='J' || (val='Q') || (val='K')){
+                            if(valeur < 16){
+                                valeur =valeur+ 10
+                            }else{
+                                valeur =valeur+ 1
+                            }
+                        }
+                        console.log(valeur)
+                }    
+            })
+        })
+
+        
+
+        
+    </script>
+</body>
+</html>

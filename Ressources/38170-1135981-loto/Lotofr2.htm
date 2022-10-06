@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Loto</title>
+<link rel="stylesheet" href="javascript.css" type="text/css" />
+		<link rel="stylesheet" href="javascript.css" type="text/css" />
+<script language="JavaScript">
+//<!--
+var i=0;
+var record=0;
+var recnbcomp=0;
+var nbparties=0;
+
+function quitter(){
+window.close();
+}
+function bonjour(){
+alert("Bienvenue au jeu : \n   'Loto'\n\n\n© NDUBIEN - 2006");
+}
+function aplus(){
+var phrase="Votre meilleur score : \n\n - "+record;
+if(record==0||record==1) phrase+=" bon numéro";
+else phrase+=" bons numéros";
+if(recnbcomp==1) phrase+="\n - et le numéro complémentaire";
+phrase+="\n--------------------\nNombre de parties jouées : "+nbparties;
+phrase+="\n\n\nA bientôt\n\n\n© NDUBIEN - 2006";
+alert(phrase);
+}
+function afficherecord(){
+var phrase="Votre meilleur score : \n\n - "+record;
+if(record==0||record==1) phrase+=" bon numéro";
+else phrase+=" bons numéros";
+if(recnbcomp==1) phrase+="\n - et le numéro complémentaire";
+phrase+="\n--------------------\nNombre de parties jouées : "+nbparties;
+alert(phrase);
+}
+function question(){
+var multiplicateur=48;
+var erreur=1;
+var nb1=Math.round(Math.random()*multiplicateur)+1;
+while(erreur==1) {
+var nb2=Math.round(Math.random()*multiplicateur)+1;
+if(nb1==nb2) erreur=1;
+else erreur=0;
+}
+erreur=1;
+while(erreur==1) {
+var nb3=Math.round(Math.random()*multiplicateur)+1;
+if(nb3==nb1||nb3==nb2) erreur=1;
+else erreur=0;
+}
+erreur=1;
+while(erreur==1) {
+var nb4=Math.round(Math.random()*multiplicateur)+1;
+if(nb4==nb1||nb4==nb2||nb4==nb3) erreur=1;
+else erreur=0;
+}
+erreur=1;
+while(erreur==1) {
+var nb5=Math.round(Math.random()*multiplicateur)+1;
+if(nb5==nb1||nb5==nb2||nb5==nb3||nb5==nb4) erreur=1;
+else erreur=0;
+}
+erreur=1;
+while(erreur==1) {
+var nb6=Math.round(Math.random()*multiplicateur)+1;
+if(nb6==nb1||nb6==nb2||nb6==nb3||nb6==nb4||nb6==nb5) erreur=1;
+else erreur=0;
+}
+erreur=1;
+while(erreur==1) {
+var nbc=Math.round(Math.random()*multiplicateur)+1;
+if(nbc==nb1||nbc==nb2||nbc==nb3||nbc==nb4||nbc==nb5||nbc==nb6) erreur=1;
+else erreur=0;
+}
+var reponse=window.prompt("Loto : Tapez 6 chiffres entre 1 et 49 séparés par 'espace' (0 0 0 0 0 0)","");
+choix=reponse.split(" ");
+var probleme=0;
+for(i=0;i!=6;i++) {
+if(parseInt(choix[i])<1||parseInt(choix[i])>49) probleme=2;
+for(j=0;j!=6;j++) {
+if(i!=j) if(parseInt(choix[i])==parseInt(choix[j])) probleme=1;
+}
+}
+if(probleme==0){
+var bonsnb=0;
+var nbcomp=0;
+for(i=0;i!=6;i++) {
+if(parseInt(choix[i])==nb1) bonsnb++;
+if(parseInt(choix[i])==nb2) bonsnb++;
+if(parseInt(choix[i])==nb3) bonsnb++;
+if(parseInt(choix[i])==nb4) bonsnb++;
+if(parseInt(choix[i])==nb5) bonsnb++;
+if(parseInt(choix[i])==nb6) bonsnb++;
+if(parseInt(choix[i])==nbc) nbcomp++;
+}
+alert("Tirage : \n\n - le numéro "+nb1+"\n - le numéro "+nb2+"\n - le numéro "+nb3+"\n - le numéro "+nb4+"\n - le numéro "+nb5+"\n - le numéro "+nb6+"\n - et le numéro complémentaire : "+nbc);
+var phrase="Vous avez joué "+bonsnb;
+if(bonsnb==0||bonsnb==1) phrase+=" bon numéro";
+else phrase+=" bons numéros";
+if(nbcomp==1) phrase+=" et le numéro complémentaire.";
+else phrase+=".";
+alert(phrase);
+if(bonsnb>record) {
+record=bonsnb;
+recnbcomp=nbcomp;}
+if(bonsnb==record&&nbcomp>recnbcomp) recnbcomp=nbcomp;
+++nbparties;
+}
+else{
+if(probleme==1) alert("Vous avez utilisé deux fois le même nombre !");
+else alert("Certains des nombres que vous avez joués sont incorrects !");
+}
+}
+
+var maintenant = new Date();
+var chronometre=maintenant.getTime();
+function plusieurs(nombre) {
+if (nombre>1){return "s"} else {return ""}
+}
+function laFormule(duree) {
+var formule="Vous êtes sur la page depuis ";
+var minutes=Math.floor(duree/60);
+var secondes= duree%60;
+if (minutes>0) {formule+=minutes+" minute"+plusieurs(minutes)+" "}
+if (secondes>0) {formule+=secondes +" seconde"+ plusieurs(secondes)}
+return formule;
+}
+function temps() {
+var ladate=new Date();
+duree = Math.round((ladate.getTime() - chronometre) / 1000);
+window.status=laFormule(duree);
+setTimeout("temps()",1000);
+}
+
+temps();
+//-->
+</script>
+
+</head>
+<body onLoad="bonjour()">
+<body onUnload="aplus()"">
+
+<p><i><a href="#" onmouseover="this.style.color='red'" onmouseout="this.style.color='blue'" onClick="afficherecord()" style="cursor:help;">Afficher mon meilleur score</a></i></p>
+<b><big><p><a href="#" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'" onClick="question()">Jouer</a></p></big></b>
+<p><i><a href="#" onmouseover="this.style.color='red'" onmouseout="this.style.color='blue'" onClick="quitter()" style="cursor:crosshair;">Quitter</a></i></p>
+</html>

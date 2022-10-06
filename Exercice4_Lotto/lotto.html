@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotto - Exercice </title>
+
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        body{
+            width: 100%;
+            text-align: center;
+        }
+        .actif{
+            background-color: rgb(159, 159, 159);
+        }
+        .nb{
+            width:40px;
+            margin-top: 5px;
+        }
+        .btncomp{
+            width:40px;
+            margin-top: 5px;
+        }
+        .container{
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .tirage{
+            width: 100%;
+        }
+        .gain{
+            width: 100%;
+        }
+        .tirage{
+            width: 100%;
+            text-align: center;
+        }
+        .pot{
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #jouer{
+            background-color: black;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            width: 250px;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+	</div>
+    <div class="container">
+        <div class="pot">
+            <div class="reste"></div>
+            <label for="mise"> Mise : </label>
+            <input type="number" name="mise" id="mise" value="10">
+        </div>
+    
+        <div class="numero">
+            <h2>Numéros tirés </h2>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                   
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                </div>
+                <div class="ligne">
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                    <button class="nb" actif="false"></button>
+                   
+                    
+                </div>
+            <p id="choix"></p>
+    
+            <div class="comp">
+                <h2>Numéro complémentaire</h2>
+                <div class="line">
+                    <button class="btncomp">1</button>
+                    <button class="btncomp">2</button>
+                    <button class="btncomp">3</button>
+                    <button class="btncomp">4</button>
+                    <button class="btncomp">5</button>
+                </div>
+                <div class="line">
+                    <button class="btncomp">6</button>
+                    <button class="btncomp">7</button>
+                    <button class="btncomp">8</button>
+                    <button class="btncomp">9</button>
+                    <button class="btncomp">10</button>
+                </div>
+            </div>
+    
+            <button id="jouer"> Jouer </button>
+        </div>
+    
+        <div class="tirage">
+            <h2>Numéros du lotto</h2>
+            <p id="numerosTires"></p>
+        </div>
+    
+        <div class="gain">
+            <h4 id="argent"></h4>
+        </div>
+    
+    </div>
+    
+    <script>
+        let boules = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49]
+        let etoiles = [1,2,3,4,5,6,7,8,9,10]
+        let boulesRestantes = boules.slice(0)
+        let etoilesRestantes = etoiles.slice(0)
+
+        
+
+        let numeros = []
+        let tirage = []
+        
+        let montant = 0
+        let complementaire = []
+        let comptirage =[]
+        
+
+
+
+        let cases = document.querySelectorAll('.nb')
+        let choisis = document.querySelectorAll('.actif')
+        let nbChoisi = document.querySelector('#choix')
+        let jouer = document.querySelector('#jouer')
+        let tirages = document.querySelector('#numerosTires')
+        let gain = document.querySelector('.gain')
+        let argent = document.querySelector('#argent')
+        let compl = document.querySelectorAll('.btncomp')
+
+        let mise = document.querySelector("#mise").value
+        console.log(mise)
+
+
+        let longueur = 49
+        let compt = 10
+        let nbMax = 5
+        let compMax = 1
+        
+        //inscription des numéros dans les cases 
+        for(var i = 0; i<longueur; i++){
+            cases[i].innerHTML=i+1;
+        }
+
+        for(var a = 0; a<10; a++){
+            cases[a].innerHTML=a+1;
+        }
+       
+        
+       
+        //selection des numéros 
+       
+            cases.forEach(element => {
+            element.addEventListener('click', function(){
+                    if(numeros.length<5){
+                        element.classList.add('actif')
+                        numeros.push(element.textContent)
+                        
+                        nbChoisi.innerHTML="Nombre de numéros choisis = "+numeros.length
+                        
+                    }else{
+                        alert('vous avez sélectionné vos 5 numéros ')
+                    }
+                }) 
+            });
+      
+        
+
+        compl.forEach(elem=>{
+            elem.addEventListener('click',function(){
+                if(complementaire.length<1){
+                        elem.classList.add('actif')
+                        
+                        complementaire.push(elem.textContent)
+                    }
+            })
+        })
+
+        
+    
+
+        //click sur le bouton jouer 
+        jouer.addEventListener('click', function(){
+            nbChoisi.innerHTML= numeros 
+
+            cases.forEach(carre=>{
+                let attribut = carre.getAttribute('class').value
+                if(numeros.lenght==5 && (attribut="actif")){
+                    numeros.push(parseInt(carre.textContent))
+                }
+            })
+
+            console.log("mes numéros:" +numeros)
+
+            if(numeros='' || (complementaire='')){
+                nbChoisi.innerText = "Veuillez choisir vos numéros avant le tirage"
+            }else{
+                tirage = []
+                comptirage = []
+
+                //tirer les 5 numeros 
+                while(tirage.length<5){
+                    tirage.push(boulesRestantes.splice(Math.floor(Math.random()*boulesRestantes.length),1)[0]);
+                }
+                while(comptirage.length<1){
+                    comptirage.push(etoilesRestantes.splice(Math.floor(Math.random()*etoilesRestantes.length),1)[0]);
+                }
+               
+            
+                
+                console.log("tirage : " +tirage)
+               
+                tirages.innerHTML= tirage +" + "+ comptirage
+
+            }
+            
+
+            //contrôle des numéros choisi dans le tirage
+                
+                console.log(numeros)///ne fonctionne pas (donne rien)
+
+
+                let numeroGagnant = 0
+                while(tirage[0]==numeros[0] || (tirage[0]==numeros[1]) || (tirage[0]==numeros[2]) || (tirage[0]==numeros[3])|| (tirage[0]==numeros[4])){
+                    numeroGagnant = numeroGagnant+1
+                    console.log("cond 1 oke")
+                }
+                while((tirage[1]==numeros[0]) || (tirage[1]==numeros[1]) || (tirage[1]==numeros[2]) || (tirage[1]==numeros[3])|| (tirage[1]==numeros[4])){
+                    numeroGagnant = numeroGagnant+1
+                    console.log("cond 2 oke")
+                }
+                while((tirage[2]==numeros[0]) || (tirage[2]==numeros[1]) || (tirage[2]==numeros[2]) || (tirage[2]==numeros[3])|| (tirage[2]==numeros[4])){
+                    numeroGagnant = numeroGagnant+1
+                    console.log("cond 3 oke")
+                }
+                while((tirage[3]==numeros[0]) || (tirage[3]==numeros[1]) || (tirage[3]==numeros[2]) || (tirage[3]==numeros[3])||( tirage[3]==numeros[4])){
+                    numeroGagnant = numeroGagnant+1
+                    console.log("cond 4 oke")
+                }
+                while((tirage[4]==numeros[0]) || (tirage[4]==numeros[1]) || (tirage[4]==numeros[2]) || (tirage[4]==numeros[3])|| (tirage[4]==numeros[4])){
+                    numeroGagnant = numeroGagnant+1
+                    console.log("cond 5 oke")
+                }
+                
+
+                console.log("nb numero ok"+numeroGagnant)
+
+
+                //controle etoile
+                let comptGagnant=0
+                if(complementaire[0]==comptirage[0] ){
+                    comptGagnant = comptGagnant+1
+                }
+            
+                // contrôle des gains 
+            if(numeroGagnant===1 && (comptGagnant===0)){
+                montant = 2.20
+            }
+            if(numeroGagnant===1 &&(comptGagnant===1)){
+                montant = 2.20
+            }
+            if(numeroGagnant===2 &&(comptGagnant===0)){
+                montant = 4.40
+            }
+            if(numeroGagnant===2 &&(comptGagnant===1)){
+                montant = 10
+            }
+            if(numeroGagnant===3 &&(comptGagnant===0)){
+                montant = 20
+            }
+            if(numeroGagnant===3 &&(comptGagnant===1)){
+                montant = 50
+            }
+            if(numeroGagnant===4 &&(comptGagnant===0)){
+                montant = 400
+            }
+            if(numeroGagnant===4 &&(comptGagnant===1)){
+                montant = 1000
+            }
+            if(numeroGagnant===5 &&(comptGagnant===0)){
+                montant = 100000
+            }
+            if(numeroGagnant===5 &&(comptGagnant===1)){
+                montant = 2000000
+            }
+
+        console.log(numeroGagnant)
+        console.log(montant +" €")
+        gain.innerHTML= numeroGagnant+"numéros trouvés <br>"+comptGagnant+ " complémentaire trouvé</br>Gains gagnés : "+montant+" € gagnés </br>"
+            
+
+            //controle du complémentaire
+            
+
+            
+
+            
+            
+            
+
+        })
+
+        
+        
+    </script>
+</body>
+</html>

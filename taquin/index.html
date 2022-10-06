@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+      }
+      #grille {
+        display: grid;
+        grid-template-columns: repeat(4, 125px);
+        grid-gap: 5px;
+      }
+      #grille > div {
+        width: 125px;
+        height: 125px;
+      }
+    </style>
+    <?!= include('images.jpg'); ?>
+
+    
+  </head>
+  <body>
+    <div id="grille">
+    </div>
+    <script>
+
+
+        function jouer() {
+  const html = HtmlService.createTemplateFromFile('taquin').evaluate()
+    .setWidth(515)
+    .setHeight(515);
+  SpreadsheetApp.getUi().showModalDialog(html, 'Jeu du taquin');
+}
+
+function include(nom) {
+  return HtmlService.createHtmlOutputFromFile(nom).getContent();
+}
+      /***************************************************************/
+      /**  Taquin créé par Sébastien Mathier - Sheets-Pratique.com  **/
+      /***************************************************************/
+
+      const tabRajoutsLig = [0, 0, 1, -1];
+      const tabRajoutsCol = [-1, 1, 0, 0];
+      
+      let grille = [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]];
+      const controle = grille.flat().join();
+	  
+      let ok = true;
+      let fin = true;
+
+      // Nouvelle partie
+      function nouvellePartie() {
+      
+        fin = false;
+
+        // Mélange des images (en déplaçant aléatoirement les images adjacentes dans la case vide)
+        for (let n = 0; n < 9999; n++) {
+          const ligDepart = Math.floor(Math.random() * 4);
+          const colDepart = Math.floor(Math.random() * 4);
+      
+          // Si pas la case vide
+          if (grille[ligDepart][colDepart] != 15) {
+      
+            // Test pour chaque côté de la case
+            for (let i = 0; i < 4; i++) {
+              const lig = ligDepart + tabRajoutsLig[i];
+              const col = colDepart + tabRajoutsCol[i];
+      
+              // Si position valide
+              if (lig >= 0 && lig <= 3 && col >= 0 && col <= 3) {
+      
+                // Si la case vide
+                if (grille[lig][col] === 15) {
+                  [grille[lig][col], grille[ligDepart][colDepart]] = [grille[ligDepart][colDepart], grille[lig][col]];
+                  break;
+                }
+              }
+            }
+          }
+        }
+      
+        // Placement des images
+        affichageGrille();
+      }
+      
+      // Affichage de la grille
+      function affichageGrille(termine = false) {
+      
+        let cases = '';
+        
+        for (const [lig, tabLigne] of grille.entries()) {
+          for (const [col, numero] of tabLigne.entries()) {
+            cases += '<div id="p' + numero + '"' + (!termine && numero == 15 ? ' class="blanc"' : '') + ' onclick="imageClic(' + numero + ')"></div>';
+          }
+        }
+        
+        document.getElementById('grille').innerHTML = cases;
+      }
+
+      // Action au clic sur une image
+      function imageClic(numero) {
+        
+        if (!ok || fin) {
+          return;
+        }
+        ok = false;
+
+        let ligClic, colClic;
+          
+        // Position de l'image cliquée dans la grille
+        fin:
+        for (const [lig, tabLigne] of grille.entries()) {
+          for (const [col, num] of tabLigne.entries()) {
+
+            // Si l'image cliquée
+            if (num == numero) {
+              ligClic = lig;
+              colClic = col;
+              break fin;
+            }
+          }
+        }
+        
+        // Test pour chaque côté de la case
+        for (let i = 0; i < 4; i++) {
+          const lig = ligClic + tabRajoutsLig[i];
+          const col = colClic + tabRajoutsCol[i];
+            
+          // Si une position valide
+          if (lig >= 0 && lig <= 3 && col >= 0 && col <= 3) {
+
+            // Si la case vide
+            if (grille[lig][col] === 15) {
+              [grille[lig][col], grille[ligClic][colClic]] = [grille[ligClic][colClic], grille[lig][col]];
+              break;
+            }
+          }
+        }
+          
+        // Test si c'est terminé
+        const termine = grille.flat().join() == controle;
+        
+        // Placement des images
+        affichageGrille(termine);
+
+        // Fin
+        if (termine) {
+          alert('Félicitations !');
+          fin = true;
+        }
+        
+        ok = true;
+      }
+      
+      // Nouvelle partie au chargement
+      window.addEventListener('load', nouvellePartie);
+      
+    </script>
+  </body>
+</html>
