@@ -63,7 +63,8 @@
             </div>   
         </div>
         <div class="coup">O commence ! Cliquez sur une case pour jouer !</div>
-        
+        <button id='rejouer' style="margin-top: 10px;">Rejouer</button>
+        <button id='restart' style="margin-top: 10px; margin-left: 10px;">Recommencer</button>
     </div>
    
 
@@ -71,13 +72,15 @@
 
 
         let pair = false
-        let l1 
-        let l2 
-        let l3 
+        let l1 = []
+        let l2 = []
+        let l3 = []
 
         let coupsX = 0
         let coupsO = 0
 
+        let restart = document.querySelector('#restart')
+        let reJouer = document.querySelector('#rejouer')
         let piece = document.querySelector('.piece')
 
         let ligne1 = document.querySelector('.l1')
@@ -134,17 +137,13 @@
                         pair= false
                         elem.innerText="X"
                         piece.innerText = "Joueur qui joue : O"
-                       
                         insert()
-                        
-                        
                     }else{
                         vider()  //vider les tableau pour ne pas démultiplier les entrées
                         
                         pair= true
                         elem.innerText="O"
                         piece.innerText = "Joueur qui joue : X"
-                      
                         insert()
                         
                     }
@@ -159,80 +158,94 @@
 
                     if((l1[0]=="O" && l1[1]=="O" && l1[2]=="O")||(l1[0]=="X" && l1[1]=="X" && l1[2]=="X")){
                         if(l1[0]=="X"){
-                            coupsX++
-                            vider()
+                            coupsX = coupsX +1
+                            rejouer()
                         }else{
-                            coupsO++
-                            vider()
+                            coupsO = coupsO +1
+                            rejouer()
                         }
                     }else if((l2[0]=="O" && l2[1]=="O" && l2[2]=="O")||(l2[0]=="X" && l2[1]=="X" && l2[2]=="X")){
                         if(l2[0]=="X"){
-                            coupsX++
-                            vider()
+                            coupsX = coupsX +1
+                            rejouer()
                         }else{
-                            coupsO++
-                            vider()
+                            coupsO = coupsO +1
+                            rejouer()
                         }
                     }else if((l3[0]=="O" && l3[1]=="O" && l3[2]=="O")||(l3[0]=="X" && l3[1]=="X" && l3[2]=="X")){
                         if(l3[0]=="X"){
-                            coupsX++
-                            vider()
+                            coupsX = coupsX +1
+                            rejouer()
                         }else{
-                            coupsO++
-                            vider()
+                            coupsO = coupsO +1
+                            rejouer()
                         }
                     }else if((l1[0]=="O" && l2[0]=="O" && l3[0]=="O")||(l1[0]=="X" && l2[0]=="X" && l3[0]=="X")){
                         if(l1[0]=="X"){
-                            coupsX++
-                            vider()
+                            coupsX = coupsX +1
+                            rejouer()
                         }else{
-                            coupsO++
-                            vider()
+                            coupsO = coupsO +1
+                            rejouer()
                         }
                     }else if((l1[1]=="O" && l2[1]=="O" && l3[1]=="O")||(l1[1]=="X" && l2[1]=="X" && l3[1]=="X")){
                         if(l1[1]=="X"){
-                            coupsX++
-                            vider()
+                            coupsX = coupsX +1
+                            rejouer()
                         }else{
-                            coupsO++
-                            vider()
+                            coupsO = coupsO +1
+                            rejouer()
                         }
                     }else if((l1[2]=="O" && l2[2]=="O" && l3[2]=="O")||(l1[2]=="X" && l2[2]=="X" && l3[2]=="X")){
                         if(l1[2]=="X"){
-                            coupsX++
-                            vider()
+                            coupsX = coupsX +1
+                            rejouer()
                         }else{
-                            coupsO++
-                            vider()
+                            coupsO = coupsO +1
+                            rejouer()
                         }
                     }else if((l1[0]=="O" && l2[1]=="O" && l3[2]=="O")||(l1[0]=="X" && l2[1]=="X" && l3[2]=="X")){
                         if(l1[0]=="X"){
-                            coupsX++
-                            vider()
+                            coupsX = coupsX +1
+                            rejouer()
                         }else{
-                            coupsO++
-                            vider()
+                            coupsO = coupsO +1
+                            rejouer()
                         }
-                    }else if((l1[2]=="O" && l2[1]=="O" && l2[0]=="O")||(l1[2]=="X" && l2[1]=="X" && l2[0]=="X")){
+                    }else if((l1[2]=="O" && l2[1]=="O" && l3[0]=="O")||(l1[2]=="X" && l2[1]=="X" && l3[0]=="X")){
                         if(l1[2]=="X"){
-                            coupsX++
-                            vider()
+                            coupsX = coupsX +1
+                            rejouer()
                         }else{
-                            coupsO++
-                            vider()
+                            coupsO = coupsO +1
+                            rejouer()
                         }
                     }
-                   
+                   vider()
                     //Affichage des points
                     coup.innerHTML="le joueur X = "+coupsX+" coups gagnants</br> le joueur O = "+coupsO+" coups gagnants"
                     
                     //si un des deux joueur gagne la partie, vider les tableaux et les cases 
-                    if(coupsO==1 || coupsX==1){
-                        cases.forEach(elem=>{
-                            elem.innerHTML=""
+                    function rejouer(){
+                        
+                            cases.forEach(elem=>{
+                                elem.innerHTML=""
                             
-                        })
-                    } 
+                            })
+                         
+                    }
+                     
+                    reJouer.addEventListener('click',function(){
+                        rejouer()
+                    })
+                   
+                    restart.addEventListener('click',function(){
+                        rejouer()
+                        coupsO = 0
+                        coupsX = 0
+                        coup.innerHTML="le joueur X = "+coupsX+" coups gagnants</br> le joueur O = "+coupsO+" coups gagnants"
+                    })
+                    
 
             })
 
