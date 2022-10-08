@@ -16,181 +16,193 @@
             text-align: center;
             font-size: 18pt;
         }
+        #dealer-cards img{
+           
+            width: 100px;
+            margin: 1px;
+        }
+        #your-cards img{
+           
+            width: 100px;
+            margin: 1px;
+        }
+        .carte{
+            width: 120px;
+        }
+
     </style>
 </head>
 <body>
-    <div>
-		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
-	</div>
     <div class="container">
         <h1>Jeu du Blackjack</h1>
-        <h3>Cartes de l'ordinateur</h3>
-        <div class="cartesOrdi">
-           
+        <h2>
+            Ordinateur : <span id="ordinateur-somme"> </span>
+        </h2>
+        <div id="dealer-cards">
+                <img id='hidden' src="./images/BACK.png" alt="">
+        </div>
+
+        <h2>
+            Mes cartes : <span id="ma-somme"></span>
+        </h2>
+        <div id="your-cards">
 
         </div>
-        <h3>Vos cartes </h3>
-        <div class="cartesPerso">
-           
-            
-        </div>
-        <br>
-        <div class="mise">
-           Pot : Vous avez 
-            <div id="pot"></div>
-            <label for="mise">Mise :</label>
-            <input type="number" name="mise" id="mise" placeholder="Mise">
-        </div>
-        <br>
-        <button id="piocher"> Piocher </button>
-        <button id="rester"> Rester </button>
-        <button id="play"> Jouer </button>
+        <button id="pioche"> Piocher </button>
+        <button id="tapis"> Tapis </button>
+        <p id="resultat"> </p>
     </div>
 
     <script>
+        var ordiSomme = 0
+        var maSomme = 0
 
-        
+        var ordiCompte = 0
+        var monCompte = 0
 
-        let paquet = [
-             'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠',
-             'Q♠', 'K♠', 'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦',
-             '10♦', 'J♦', 'Q♦', 'K♦', 'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣',
-             '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♥', '2♥', '3♥', '4♥', '5♥',
-             '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥'
-        ]
+        var hidden
+        var jeu 
 
-        var paquetRestant = paquet.slice(0)
+        var okePioche = true
 
-        var paquetAleaBanque = []
-        var paquetAleaJoueur =  []
-       
-
-        let porteFeuille = 100
-        const pot = document.querySelector('#pot')
-        pot.innerHTML = porteFeuille+"€"
-
-        const btnPioche = document.querySelector('#piocher')
-        const btnRester = document.querySelector('#rester')
-        const btnJouer = document.querySelector('#play')
-        
-        const cartesOrdi = document.querySelector('.cartesOrdi')
-        const cartesJoueur = document.querySelector('.cartesPerso')
-
-        let gagné = false
-       
-
-        
-        btnJouer.addEventListener('click',function(){
+        window.onload = function() {
+            constructJeu()
+            mix()
+            jouer()
             
-                while(paquetAleaBanque.length<1){
-                    paquetAleaBanque.push(paquetRestant.splice(Math.floor(Math.random()*paquetRestant.length),1)[0]);
+        }
+        function constructJeu() {
+            let valeurs = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] //valeurs des cartes 
+            let types = ["C", "D", "H", "S"] //types des cartes
+            jeu = [] //paquet de cartes
+
+            for (let i = 0; i < types.length; i++) {
+                for (let j = 0; j < valeurs.length; j++) {
+                    jeu.push(valeurs[j] + "-" + types[i]); 
+                    //forme le jeu de 52 cartes 
                 }
-                while(paquetAleaJoueur.length<2){
-                    paquetAleaJoueur.push(paquetRestant.splice(Math.floor(Math.random()*paquetRestant.length),1)[0]);
+            }
+            // console.log(jeu);
+        }
+        
+        function mix() {
+            for (let i = 0; i < jeu.length; i++) {
+                let j = Math.floor(Math.random() * jeu.length); 
+                let temp = jeu[i];
+                jeu[i] = jeu[j];
+                jeu[j] = temp; //échange des cartes pour les mélanger
+            }
+            console.log(jeu);
+        }
+        
+        function jouer(){
+            hidden = jeu.pop() //supprime la dernière valeur du tableau 
+            ordiSomme += getValue(hidden) // calcule la valeur de la carte
+            
+            ordiCompte += asControl(hidden)
+
+            // console.log(hidden)
+            // console.log(ordiSomme)
+
+            while (ordiSomme < 17){ //tant que l'ordi n'atteint pas 16 il pioche 
+                let carteImg = document.createElement('img') // on crée une image
+                let card = jeu.pop() //on supprime la carte du jeu 
+                carteImg.src = "./images/"+card+".png" //initialisation de la source de l'image
+                ordiSomme += getValue(card) //obtenir la valeur de la carte 
+                ordiCompte += asControl(card) 
+                document.getElementById("dealer-cards").append(carteImg) //lie la carte à la div
+            }
+
+            console.log(ordiSomme)
+
+            // distribution de deux cartes au joueur
+            for (let i=0 ; i<2 ; i++){
+                let carteImg = document.createElement('img') // on crée une image
+                let card = jeu.pop() //on supprime la carte du jeu 
+                carteImg.src = "./images/"+card+".png" //initialisation de la source de l'image
+                maSomme += getValue(card) //obtenir la valeur de la carte 
+                monCompte += asControl(card) 
+                document.getElementById("your-cards").append(carteImg) //lie la carte à la div
+            }
+            console.log(maSomme)
+
+            document.getElementById("pioche").addEventListener('click', pioche)
+            document.getElementById("tapis").addEventListener('click', stay)
+        }
+
+        function pioche(){
+            if(!okePioche){
+                return;
+            }
+
+            let carteImg = document.createElement('img') // on crée une image
+            let card = jeu.pop() //on supprime la carte du jeu 
+            carteImg.src = "./images/"+card+".png" //initialisation de la source de l'image
+            maSomme += getValue(card) //obtenir la valeur de la carte 
+            monCompte += asControl(card) 
+            document.getElementById("your-cards").append(carteImg) //lie la carte à la div
+
+            if(reduceAce(maSomme, monCompte) > 21){
+                okePioche = false
+            }
+
+        }
+
+        function stay(card){ 
+            ordiSomme =reduceAce(ordiSomme, ordiCompte)
+            maSomme = reduceAce(maSomme, monCompte)
+
+            okePioche = false
+
+            document.getElementById('hidden').src = "./images/"+hidden+".png"
+
+            let message= ""
+            if (maSomme >21){
+                message = "Vous perdez ! "
+            }else if(ordiSomme>21){
+                message = "Vous gagnez "
+            }else if(maSomme == ordiSomme){
+                message = "Cravate"
+            }else if(maSomme>ordiSomme){
+                message = "Vous gagnez"
+            }else if(maSomme<ordiSomme){
+                mesaage= "Vous perdez "
+            }
+            document.getElementById('ordinateur-somme').innerText = ordiSomme
+            document.getElementById('ma-somme').innerText = maSomme
+            document.getElementById('resultat').innerText = message
+        }
+
+        function getValue(card){
+            let data = card.split('-') // sépare le nom de la carte en deux valeur de tableau par exemple :["4" , "C"]
+            let value = data[0]
+
+            if(isNaN(value)){
+                if(value == "A"){ // dans le cas de l'as 
+                    return 11;
                 }
-            
-            
-            
-            
-            cartesOrdi.innerHTML = paquetAleaBanque
-            cartesJoueur.innerHTML = paquetAleaJoueur
-            
-           
-            console.log(paquet)
-            console.log(paquetAleaBanque)
-            console.log(paquetAleaJoueur)
-            console.log(paquetRestant)
+                return 10; // dans le cas d'une reine, un roi ou un valet 
+            }
+            return parseInt(value);  // retourne la valeur de la carte
+        }
 
-            
-           
-           
-           
-        
-            
-            
-            
-            btnPioche.addEventListener('click', function(){
-                console.log('pioche')
-                
-                    paquetAleaJoueur.push(paquetRestant.splice(Math.floor(Math.random()*paquetRestant.length),1)[0]);
+        function asControl(card){
+            if(card[0]=="A"){
+                return 1;
+            }
+            return 0
+        }
 
-                    
-                    console.log(paquetAleaBanque)
-                    console.log(paquetAleaJoueur)
-                    
-
-                cartesJoueur.innerHTML = paquetAleaJoueur
-
-                
-                
-            })
-
-            btnRester.addEventListener('click', function(){
-                console.log('tapis')
-                paquetAleaBanque.push(paquetRestant.splice(Math.floor(Math.random()*paquetRestant.length),1)[0]);
-
-                    console.log(paquetAleaBanque)
-                    console.log(paquetAleaJoueur)
-
-                    cartesOrdi.innerHTML = paquetAleaBanque
-                
-                    //calculer les points ??????
-                    for(let i=0; i<paquetAleaJoueur.lenght; i++){
-                    console.log('toto')
-                    let valeur
-                    let val = paquetAleaJoueur[i].substring(0,1)
-                    let val2 = paquetAleaJoueur[i].substring(1,1)
-                        if(val = "2"){
-                            valeur = valeur + 2
-                        }
-                        if(val = "3"){
-                            valeur = valeur+ 3
-                        }
-                        if(val = "4"){
-                            valeur = valeur+ 4
-                        }
-                        if(val = "5"){
-                            valeur = valeur+ 5
-                        }
-                        if(val = "6"){
-                            valeur = valeur+ 6
-                        }
-                        if(val = "7"){
-                            valeur = valeur + 7
-                        }
-                        if(val = "8"){
-                            valeur = valeur+ 8
-                        }
-                        if(val = "9"){
-                            valeur = valeur+ 9
-                        }
-                        if(val = "A"){
-                            if(val2 = "♦"){
-                                if(valeur<16){
-                                    valeur = valeur+ 10
-                                }else{
-                                    valeur = valeur+ 1
-                                }
-                            }else{
-                                valeur =valeur+ 10
-                            }
-                            
-                        }
-                        if(val='J' || (val='Q') || (val='K')){
-                            if(valeur < 16){
-                                valeur =valeur+ 10
-                            }else{
-                                valeur =valeur+ 1
-                            }
-                        }
-                        console.log(valeur)
-                }    
-            })
-        })
-
-        
-
+        function reduceAce(maSomme, monCompte){ // règle si j'excède 21 l'as vaut 1
+            while(maSomme > 21 && monCompte >0){
+                maSomme -=10
+                monCompte -=1
+            }
+            return maSomme
+        }
         
     </script>
+
+    <!-- source d'inspiration (https://user-images.githubusercontent.com/78777681/163043266-b2232ed5-23e6-4550-9ed1-809c68ffa96b.png)-->
 </body>
 </html>
