@@ -35,6 +35,11 @@
 <body>
     <div class="container">
         <h1>Jeu du Blackjack</h1>
+        <div class="portefeuille">
+            Votre portefeuille compte : 
+            <div id="argent">100€</div>
+        </div>
+        <input type="number" name="mise" id="mise" value="10">
         <h2>
             Ordinateur : <span id="ordinateur-somme"> </span>
         </h2>
@@ -54,6 +59,26 @@
     </div>
 
     <script>
+
+        // inspiration d'un tutoriel + adaptaion pour la mise 
+
+        var mise = document.querySelector('#mise').value
+        console.log(mise)
+
+        // si portefeuille dans le localStorage 
+        var portefeuille
+        if(localStorage.getItem('portefeuilleBJ')==null){
+            portefeuille = 100
+        }else{
+            portefeuille = parseInt(localStorage.getItem('portefeuilleBJ'))
+            document.getElementById('argent').innerHTML= portefeuille+'€'
+        }
+
+        
+        console.log(portefeuille)
+
+
+
         var ordiSomme = 0
         var maSomme = 0
 
@@ -159,15 +184,25 @@
             let message= ""
             if (maSomme >21){
                 message = "Vous perdez ! "
+                portefeuille = portefeuille-mise
             }else if(ordiSomme>21){
                 message = "Vous gagnez "
+                portefeuille = portefeuille+(mise*2)
             }else if(maSomme == ordiSomme){
                 message = "Cravate"
+                portefeuille =portefeuille
             }else if(maSomme>ordiSomme){
                 message = "Vous gagnez"
+                portefeuille = portefeuille+(mise*2)
             }else if(maSomme<ordiSomme){
-                mesaage= "Vous perdez "
+                message= "Vous perdez "
+                portefeuille = portefeuille-mise
             }
+
+            localStorage.setItem('portefeuilleBJ',portefeuille)
+            console.log("portefeuille:"+portefeuille)
+            document.getElementById("argent").innerHTML = portefeuille+"€"
+
             document.getElementById('ordinateur-somme').innerText = ordiSomme
             document.getElementById('ma-somme').innerText = maSomme
             document.getElementById('resultat').innerText = message
@@ -203,6 +238,6 @@
         
     </script>
 
-    <!-- source d'inspiration (https://user-images.githubusercontent.com/78777681/163043266-b2232ed5-23e6-4550-9ed1-809c68ffa96b.png)-->
+   
 </body>
 </html>
