@@ -37,7 +37,7 @@
         <h1>Jeu du Blackjack</h1>
         <div class="portefeuille">
             Votre portefeuille compte : 
-            <div id="argent">100€</div>
+            <div id="argent"></div>
         </div>
         <input type="number" name="mise" id="mise" value="10">
         <h2>
@@ -62,20 +62,28 @@
 
         // inspiration d'un tutoriel + adaptaion pour la mise 
 
-        var mise = document.querySelector('#mise').value
+       
+
+        if(mise<10){
+            mise=10
+        }else{
+            mise = parseInt(document.querySelector('#mise').value)
+        }
         console.log(mise)
 
         // si portefeuille dans le localStorage 
-        var portefeuille
-        if(localStorage.getItem('portefeuilleBJ')==null){
+        var portefeuille = localStorage.getItem('portefeuilleBJ')
+        console.log(portefeuille)
+
+        if(portefeuille <= 0 || portefeuille == null){
             portefeuille = 100
+            document.querySelector('#argent').innerHTML= portefeuille+'€'
         }else{
             portefeuille = parseInt(localStorage.getItem('portefeuilleBJ'))
-            document.getElementById('argent').innerHTML= portefeuille+'€'
+            document.querySelector('#argent').innerHTML= portefeuille+'€'
         }
 
         
-        console.log(portefeuille)
 
 
 
@@ -187,13 +195,13 @@
                 portefeuille = portefeuille-mise
             }else if(ordiSomme>21){
                 message = "Vous gagnez "
-                portefeuille = portefeuille+(mise*2)
+                portefeuille = portefeuille+mise+mise
             }else if(maSomme == ordiSomme){
                 message = "Cravate"
                 portefeuille =portefeuille
             }else if(maSomme>ordiSomme){
                 message = "Vous gagnez"
-                portefeuille = portefeuille+(mise*2)
+                portefeuille = portefeuille+mise+mise
             }else if(maSomme<ordiSomme){
                 message= "Vous perdez "
                 portefeuille = portefeuille-mise
