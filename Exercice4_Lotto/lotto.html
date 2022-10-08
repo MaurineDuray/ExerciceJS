@@ -58,6 +58,7 @@
         }
         h4{
             margin-top: 15px;
+            width: 100%;
         }
         .numero{
             margin-top: 15px;
@@ -227,7 +228,7 @@
         let longueur = 49
         let compt = 10
         let nbMax = 5
-        let compMax = 1
+        let compMax = 2
         
         //inscription des numéros dans les cases 
         for(var i = 0; i<longueur; i++){
@@ -260,9 +261,10 @@
 
             });
 
+        //selection des étoiles
         compl.forEach(elem=>{
             elem.addEventListener('click',function(){
-                if(complementaire.length<1){
+                if(complementaire.length<2){
                     var actif = elem.getAttribute('data')
                         if(actif=='false'){
                             elem.classList.add('actif')
@@ -270,7 +272,7 @@
                             complementaire.push(elem.textContent)
                         }
                 }else{
-                        alert('vous avez sélectionné votre étoile ')
+                        alert('vous avez sélectionné vos 2 étoiles ')
                 }
             })
         })
@@ -299,11 +301,11 @@
                 while(tirage.length<5){
                     tirage.push(boulesRestantes.splice(Math.floor(Math.random()*boulesRestantes.length),1)[0]);
                 }
-                while(comptirage.length<1){
+                while(comptirage.length<2){
                     comptirage.push(etoilesRestantes.splice(Math.floor(Math.random()*etoilesRestantes.length),1)[0]);
                 } 
                 console.log("tirage : " +tirage)
-                tirages.innerHTML= tirage +" + "+ comptirage  
+                tirages.innerHTML= "<strong>"+tirage +" + "+ comptirage+"</strong>"
             }
             
             console.log("mes numéros:" +numeros)
@@ -339,12 +341,18 @@
 
                 //controle etoile
                 let comptGagnant=0
-                if(complementaire[0]==comptirage[0] ){
+                if(complementaire[0]==comptirage[0] || (complementaire[0]==comptirage[1] )){
                     comptGagnant = comptGagnant+1
                 }
+                
+                if(complementaire[1]==comptirage[0] || (complementaire[1]==comptirage[1]) ){
+                    comptGagnant = comptGagnant+1
+                }
+
+                console.log("étoiles"+comptGagnant)
             
                 // contrôle des gains 
-            if(numeroGagnant===1 && (comptGagnant===0)){
+            if(numeroGagnant===0 && (comptGagnant===1)){
                 montant = 2.20
             }
             if(numeroGagnant===1 &&(comptGagnant===1)){
