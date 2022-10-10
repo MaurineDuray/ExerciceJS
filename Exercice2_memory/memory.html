@@ -5,10 +5,296 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            width: 100%;
+        }
+        .container{
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .container h1{
+            margin-top: 20px;
+        }
+        #game{
+            width: 500px;
+            height: 500px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            margin-top: 25px;
+        }
+        #game img{
+            width: 100px;
+            height: 100px;
+            border: solid black 1px;
+            padding: 3px;
+            cursor: pointer;
+            
+        }
+        #jouer{
+            margin-top: 10px;
+            width: 100px;
+            height: 30px;
+        }
+        .chrono{
+            margin-top: 50px;
+            font-size: 24pt;
+        }
+
+    </style>
 </head>
 <body>
     <div>
 		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
 	</div>
+    <div class="container">
+        <h1>Jeu de memory </h1>
+        <div class="point"><strong>Cliquez sur jouer pour commencer</strong></div>
+        <div class="bestTime"></div>
+        <div id="game"></div>
+        <strong><div class="chrono">00:00:00</div></strong>
+        
+        <button id="jouer">Jouer</button>
+    </div>
+
+    <script>
+
+        let game = document.querySelector('#game')
+        let jouer = document.querySelector('#jouer')
+        let point = document.querySelector('.point')
+        let valeurs = ['1','1','2','2','3','3','4','4','5','5','6','6','7','7','8','8','9','9','10','10']
+        
+        let chrono = document.querySelector('.chrono')
+        let secondes = 0
+        let minutes = 0
+        let heures = 0
+        let timeout; 
+
+        let estArrete = true;
+
+        let bestTime = document.querySelector('.bestTime')
+        let temps = localStorage.getItem('montemps')
+        if(temps==''){
+            bestTime.innerHTML="Vous n'avez pas de meilleur temps pour l'instant"
+        }else{
+            bestTime.innerHTML="Actuellement, votre meilleur temps est de : "+temps
+        }
+       
+        const defilerTemps = ()=>{
+            if(estArrete) return
+
+            secondes = parseInt(secondes)
+            minutes = parseInt(minutes)
+            heures =parseInt(heures)
+            //sécuriser les valeurs pour n'avoir que des entiers
+
+            secondes ++ // ajouter une seconde
+            if(secondes ==60){
+                minutes ++
+                secondes =0 
+                // les secondes passent à 0 et les minutes passent à +1 une fois les secondes passant les 60
+            }
+            if(minutes == 60){
+                heures++
+                minutes = 0
+                // les minutes passent à 0 et les heures passent à +1 une fois les minutes passant les 60
+            }
+
+            //les zéro à l'affichage
+            if(secondes<10){
+                secondes = "0"+secondes
+            }
+            if(minutes<10){
+                minutes = "0"+minutes
+            }
+            if(heures<10){
+                heures = "0"+heures
+            }
+
+            chrono.textContent= `${heures}:${minutes}:${secondes}` 
+            //insertion des nouvelles valeur dans l'html avec textContent
+
+            timeout = setTimeout(defilerTemps,1000)
+            // Explication setTimeout(): permet de définir un minuteur qui exécute une fonction (ici defilerTemps) ou un code donné après la fin du délai indiqué (1000)
+
+        }
+        const arreter = ()=>{
+            if(!estArrete){
+                estArrete = true
+                clearTimeout(timeout)
+            }
+        }
+
+        const reset = ()=>{
+            chrono.textContent ="00:00:00"
+            estArrete =true
+            heures =0
+            minutes =0
+            secondes =0
+            clearTimeout(timeout)
+
+        }
+        const demarrer = () =>{
+            if(estArrete){
+                estArrete =false
+                defilerTemps()
+            }
+        }
+        
+     
+        function recommence(){
+            window.location.reload()
+        }
+
+        function mix(){
+            for (let i = 0; i < valeurs.length; i++) {
+            let j = Math.floor(Math.random() * valeurs.length); 
+            let temp = valeurs[i];
+            valeurs[i] = valeurs[j];
+            valeurs[j] = temp; //échange des cartes pour les mélanger
+            }
+        }
+        
+        //crée le jeu 
+        function construct(){
+           for (let i=0 ; i<20 ; i++){
+            let carteImg = document.createElement('img') // on crée une image
+            let card = valeurs.pop() //on supprime la carte du jeu 
+            carteImg.setAttribute('data',card)
+            carteImg.setAttribute('vue', false)
+            carteImg.src = "./images/dos.jpg" //initialisation de la source de l'image
+            
+            document.getElementById("game").append(carteImg) //lie la carte à la div
+        } 
+        }
+
+        
+        
+        window.onload = function() {
+            mix()
+            construct()
+           
+        }
+        
+       let choice = []
+        jouer.addEventListener('click',function(){
+            
+            demarrer() // démarre le chrono
+            
+            let carteImg = document.querySelectorAll('img')
+            carteImg.forEach(element => {
+                element.setAttribute('vue', false)
+                element.src = "./images/dos.jpg"
+                
+            });
+
+            let j = 0
+            let paire = 0 
+            carteImg.forEach(elem=>{
+                elem.addEventListener('click', function(){
+                        let test = elem.getAttribute('vue')
+                        console.log('statut : '+test)
+                        if(test=='false'){
+                            //tant que je n'ai pas choisi deux cases je change l'attribut de la case en stay et je push la data de la cas choisie ds un tableau 
+                            if(j<2){ 
+                                let data = parseInt(elem.getAttribute('data'))
+                                
+                                let attri = elem.getAttribute('vue')
+                                
+                                if(attri !='stay' && (attri!='true')){
+                                    elem.setAttribute('vue','stay')
+                                    elem.src = "./images/"+data+".png"
+                                    choice.push(data)
+                                }
+                                
+                                
+                                j++
+                                
+                            }
+
+                             //une fois que j=2 je compare les deux valeurs du tableau et si c'est égal pour chaque case qui a l'attribut stay deviendra true 
+                                if(j==2){
+                                    if(choice[0]==choice[1] ){
+                                        carteImg.forEach(element=>{
+                                            let attribute = element.getAttribute('vue')
+                                            console.log(attribute)
+                                            if(attribute == 'stay'){
+                                                element.setAttribute('vue',true)
+                                            
+                                            }
+                                            
+                                            
+                                        })
+                                        paire++
+                                                point.innerHTML = "Nombre de paires trouvées : "+paire
+                                                console.log(paire +' paire(s) trouvée(s)')
+                                        //initialisation du nombre de paires trouvées 
+                                        
+
+                                        //une fois que j'ai 10 paires le jeu recommence 
+                                        if(paire ==10){
+                                            
+                                            arreter() // une fois dix paires trouvées, je récupère le temps et comparaison avec le temps stocké
+                                            let myTime = chrono.textContent
+                                            
+                                            alert('vous avez terminé le jeu avec un temps de :'+myTime)
+
+                                            if(localStorage.getItem('montemps')==null){
+                                                localStorage.setItem('montemps',myTime)
+                                            }else{
+                                                if(myTime<localStorage.getItem('montemps')){
+                                                    localStorage.setItem('montemps',myTime)
+                                                }
+                                            }
+                                            recommence() 
+
+                                        }
+                                    
+                                    //si les deux valeurs ne sont pas
+                                    }else{
+                                        
+                                        console.log('raté')
+                                        carteImg.forEach(element=>{
+                                            let attribute = element.getAttribute('vue')
+                                            console.log(attribute)
+                                            if(attribute == "stay"){
+                                                element.src = "./images/dos.jpg"
+                                                element.setAttribute('vue',false)
+                                            }
+                                        })
+                                    }
+                                    choice=[]
+                                    j=0
+
+                                }
+                            }  
+                }) 
+            })
+            
+             
+                
+        })    
+    
+
+        
+        
+
+        
+        
+       
+
+
+
+
+        
+    </script>
 </body>
 </html>
