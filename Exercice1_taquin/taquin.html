@@ -1,203 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-
-	<style>
-		.piece, .piececachee{
-			text-align: center;
-			line-height: 120px;
-			font-size: 20px;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taquin</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            width: 100%;
+            background-color: rgb(47, 47, 47);
+            color:rgb(255, 146, 57);
+        }
+        .container{
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .container h1{
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        .game{
+            width: 400px;
+            height: 400px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .game img{
+            width: 100px;
+            height: 100px;
+            margin-top: -4px;
+            cursor: pointer;
+        }
+        div{
+            width: 100%;
+        }
+        #start{
+            width: 40%;
+            background-color: rgb(255, 163, 5);
+            color: black;
+            height: 30px;
+            border: none;
+            border-radius: 50px;;
+            font-weight: bold;
+            font-size: 20pt;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .model{
+            width: 200px;
+            height: 200px;
+            background-image: url(images/design-plat-fond-halloween_52683-43845.webp) ;
+            background-size: cover;
+            background-position: center center;
+            margin-bottom: 20px;
+            margin-right: 15px;
+        }
+        .chrono{
+            font-size: 28pt;
+        }
+    </style>
 </head>
 <body>
-	<div>
+    <div>
 		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
 	</div>
-	
-	<div class="container" style="position: relative; display: block; width: 100%;max-width: 480px; height: auto; margin: auto; font-family: 'Lato', Calibri, Arial, sans-serif">
-		<h1>Jeu du taquin</h1>
-		<div class="chrono">Chrono :</div>
-		<button id="jouer" >Jouer</button>
-		<button id="melange"> Melanger</button>
-		<div id="jeu" style="position: relative ;width: 480px;height: 480px;margin-top: 10px; display: flex;" >
-			
-			<div class="piececachee" place ="0" style="position: absolute; display:block; cursor: pointer ; left:0; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122); visibility: hidden;"></div>
-			<div class="piece" place ="1" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">1</div>
-			<div class="piece" place ="2" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">2</div>
-			<div class="piece" place ="3" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">3</div>
-			<div class="piece" place ="4" style="position: absolute; display:block; cursor: pointer ; left:0; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">4</div>
-			<div class="piece" place ="5" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">5</div>
-			<div class="piece" place ="6" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">6</div>
-			<div class="piece" place ="7" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">7</div>
-			<div class="piece" place ="8" style="position: absolute; display:block; cursor: pointer ; left:0; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">8</div>
-			<div class="piece" place ="9" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">9</div>
-			<div class="piece" place ="10" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">10</div>
-			<div class="piece" place ="11" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">11</div>
-			<div class="piece" place ="12" style="position: absolute; display:block; cursor: pointer ; left:0; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">12</div>
-			<div class="piece" place ="13" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">13</div>
-			<div class="piece" place ="14" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">14</div>
-			<div class="piece" place ="15" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);">15</div>
-			
-		</div>
-	</div>
-	<script type="text/javascript">
-
-		function getRandomInt(max) {
-		return Math.floor(Math.random() * max);
-		} 
-        const btnStart = document.querySelector('#jouer')
-		const btnMix = document.querySelector("#melange")
-		let heures = 0
-		let minutes = 0
-		let secondes = 0
+    <div class="container">
+        <h1>Jeu du taquin</h1>
+        <div class="model"></div>
+        <div class="game">
 
 
-		const jeu = document.querySelector("#jeu")
-		console.log(jeu)
+        </div>
+        <div id="appuyer"><strong>APPUYEZ SUR START POUR COMMENCER</strong></div>
+        <div><button id="start">START</button></div>
+        <div>Nombre de coups: <span id="coups"></span></div>
+        <div class="bestTime"></div>
+        <div class="chrono">00:00:00</div>
+    </div>
 
-		const pieces = jeu.querySelectorAll(".piece")
-		console.log(pieces)
+    <script>
+//chrono
+    let chrono = document.querySelector('.chrono')
+    let secondes = 0
+    let minutes = 0
+    let heures = 0
+    let timeout; 
+    let estArrete = true;
 
-		
-		var bonOrdre=[ 1, 2, 3, 4, 5, 6 ,7, 8, 9, 10, 11, 12, 13, 14, 15]
-		
-		let tab=[]
+    //si j'ai un meilleur temps dans le localstorage je l'affiche 
+    let bestTime = document.querySelector('.bestTime')
+        let temps = localStorage.getItem('bestTime')
+        if(temps==null){
+            bestTime.innerHTML="Vous n'avez pas de meilleur temps pour l'instant"
+        }else{
+            bestTime.innerHTML="Actuellement, votre meilleur temps est de : "+temps
+        }
 
-		pieces.forEach(element => {
-			
-			element.addEventListener("click" , function(e){
+     //function du chrono
 
-				
+     const defilerTemps = ()=>{
+        if(estArrete) return
 
-				// retourne l'attribut place dans la case 
-				const nb = element.getAttribute('place')
-				pieces[element.getAttribute('place')-1].innerHTML= nb
+        secondes = parseInt(secondes)
+        minutes = parseInt(minutes)
+        heures =parseInt(heures)
+        //sécuriser les valeurs pour n'avoir que des entiers
 
-				//vérifie la pièce cliquée
-				console.log('Numéro de pièce cliquée :'+element.getAttribute('place'))
+        secondes ++ // ajouter une seconde
+        if(secondes ==60){
+            minutes ++
+            secondes =0 
+            // les secondes passent à 0 et les minutes passent à +1 une fois les secondes passant les 60
+        }
+        if(minutes == 60){
+            heures++
+            minutes = 0
+            // les minutes passent à 0 et les heures passent à +1 une fois les minutes passant les 60
+        }
 
-				//récupère la pièce cachée et sa position initiale
-				const cachee = jeu.querySelector('.piececachee')
-				var posLeftCachee = parseInt(cachee.style['left']) 
-				var posTopCachee = parseInt(cachee.style['top'])
+        //les zéro à l'affichage
+        if(secondes<10){
+            secondes = "0"+secondes
+        }
+        if(minutes<10){
+            minutes = "0"+minutes
+        }
+        if(heures<10){
+            heures = "0"+heures
+        }
 
-				console.log("Left cachée initiale:"+posLeftCachee+" px")
-				console.log("Top cachée initiale:"+posTopCachee+" px")
+        chrono.textContent= `${heures}:${minutes}:${secondes}` 
+        //insertion des nouvelles valeur dans l'html avec textContent
+
+        timeout = setTimeout(defilerTemps,1000)
+        // Explication setTimeout(): permet de définir un minuteur qui exécute une fonction (ici defilerTemps) ou un code donné après la fin du délai indiqué (1000)
+
+    }
+
+    const arreter = ()=>{
+        if(!estArrete){
+            estArrete = true
+            clearTimeout(timeout)
+        }
+    }
+
+    const reset = ()=>{
+        chrono.textContent ="00:00:00"
+        estArrete =true
+        heures =0
+        minutes =0
+        secondes =0
+        clearTimeout(timeout)
+
+    }
+    const demarrer = () =>{
+        if(estArrete){
+            estArrete =false
+            defilerTemps()
+        }
+    }
+ //fin function chrono
 
 
-				// récupère la position initiale de la touche cliquée
-				var mleft = parseInt(element.style['left'])
-				var mtop = parseInt(element.style['top'])
+    let start = document.querySelector('#start')
+    let appuie = document.querySelector('#appuyer')
+    var ligne = 4
+    var colonne = 4
 
-				console.log("Left initial cliquée :"+mleft+" px")
-				console.log("Top initial cliquée :"+mtop+" px")
+    var caseClic;
+    var caseTarget; //case blanche
 
-				if(
-				((posLeftCachee-mleft) == 120 && posTopCachee == mtop) || 
-				((posLeftCachee-mleft) == -120 && posTopCachee == mtop) ||
-				((posTopCachee-mtop) == 120 && posLeftCachee == mleft) ||
-				((posTopCachee-mtop) == -120 && posLeftCachee == mleft)
-				) 
-				{
-					
-					cachee.style.left = mleft+'px'
-					cachee.style.top = mtop+'px'
-					//attribue la position de la touche cliquée à la touche cachée
+    var coups = 0
+    let bonOrdre = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"]
+    //let ordre = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","16","15"]
+    let ordre = ["16","4","5","9","10","14","1","15","2","7","3","12","6","8","11","13"]
 
-					pieces[element.getAttribute('place')-1].style.left = `${posLeftCachee}`+'px' 
-					pieces[element.getAttribute('place')-1].style.top = `${posTopCachee}`+'px'
-					// la pièce cliquée prend la place de la pièce cachée
-					console.error('deplacement effectué')
+    let game = document.querySelector('.game')
 
-				}else{
-					console.error('déplacement non autorisé')
-				}
+    window.onload = function(){
+        for(let l=0; l<ligne ;l++){
+            for(let c = 0; c<colonne ; c++){
+                const carre = document.createElement('img')
+                carre.id = l.toString()+" - "+c.toString() //id="0-1" numero de ligne-numero de colonne
+                carre.src = "images/"+bonOrdre.shift()+".jpg"
 
-				
-			
-			})
-			
-		})
+               
+                game.append(carre) // associer les cases a la div game
+            }
+        }
+    }
 
-		//chrono 
-		let timeout;
-		
-		let estArrete =true;
+    start.addEventListener('click', function(){
+        let ordre = ["16","4","5","9","10","14","1","15","2","7","3","12","6","8","11","13"]
+        game.innerHTML=""
+        appuie.innerHTML=""
+        demarrer() // démarre le chrono
 
-		const demarrer = () =>{
-		if(estArrete){
-			estArrete =false
-			defilerTemps()
-		}
-		const arreter = ()=>{
-		if(!estArrete){
-			estArrete = true
-			clearTimeout(timeout)
-		}
+        for(let l=0; l<ligne ;l++){
+            
+            for(let c = 0; c<colonne ; c++){
+                const carre = document.createElement('img')
+                carre.id = l.toString()+" - "+c.toString() //id="0-1" numero de ligne-numero de colonne
+                carre.src = "images/"+ordre.shift()+".jpg"
 
-		const defilerTemps = ()=>{
-		if(estArrete) return
+                //étapes du drag and drop pour échanger les images 
+                carre.addEventListener('dragstart', dragStart)
+                carre.addEventListener('dragover', dragOver)
+                carre.addEventListener('dragenter', dragEnter)
+                carre.addEventListener('dragleave', dragLeave)
+                carre.addEventListener('drop', dragDrop)
+                carre.addEventListener('dragend', dragEnd)
 
-		secondes = parseInt(secondes)
-		minutes = parseInt(minutes)
-		heures =parseInt(heures)
-		//sécuriser les valeurs pour n'avoir que des entiers
+                game.append(carre) // associer les cases a la div game
+            }
+            
+        }
+         
+    })
 
-		secondes ++ // ajouter une seconde
-		if(secondes ==60){
-			minutes ++
-			secondes =0 
-			// les secondes passent à 0 et les minutes passent à +1 une fois les secondes passant les 60
-		}
-		if(minutes == 60){
-			heures++
-			minutes = 0
-			// les minutes passent à 0 et les heures passent à +1 une fois les minutes passant les 60
-		}
+    function dragStart(){
+        caseClic = this
+    }
+       
+    function dragOver(e){
+        e.preventDefault();
+    }
+        
+    function dragEnter(e){
+        e.preventDefault()
+    }
 
-		//les zéro à l'affichage
-		if(secondes<10){
-			secondes = "0"+secondes
-		}
-		if(minutes<10){
-			minutes = "0"+minutes
-		}
-		if(heures<10){
-			heures = "0"+heures
-		}
+    function dragLeave(){
 
-		chrono.textContent= `${heures}:${minutes}:${secondes}` 
-		//insertion des nouvelles valeur dans l'html avec textContent
+    }
 
-		timeout = setTimeout(defilerTemps,1000)
-		// Explication setTimeout(): permet de définir un minuteur qui exécute une fonction (ici defilerTemps) ou un code donné après la fin du délai indiqué (1000)
+    function dragDrop(){
+        caseTarget = this;
+    }
 
-	}
+    function dragEnd(){
+        if(!caseTarget.src.includes("16.jpg")){
+            return;
+        }
 
-	const reset = ()=>{
-		chrono.textContent ="00:00:00"
-		estArrete =true
-		heures =0
-		minutes =0
-		secondes =0
-		clearTimeout(timeout)
+        let clicCoords = caseClic.id.split("-")
+        let l = parseInt(clicCoords[0])
+        let c = parseInt(clicCoords[1]) // obtenir les coordonnées de la case cliquée
 
-	} //remise à zéro des valeurs et effacement du timeout avec clearTimeout()
+        let targetCoords = caseTarget.id.split("-")
+        let l2 = parseInt(targetCoords[0])
+        let c2 = parseInt(targetCoords[1]) // obtenir les coordonnées de la case sur laquelle on glisse la case cliquée
 
-	startBtn.addEventListener("click",demarrer)
-	stopBtn.addEventListener("click",arreter)
-	resetBtn.addEventListener("click",reset)
-	// appel des différentes fonction selon le rôle de chaque bouton
+        let mouvGauche = l==l2 && c2==c-1 // bouge à gauche si les cases sont sur la même ligne et que le n° colonne de target = n° colonne de clic-1
+        let mouvDroite = l==l2 && c2==c+1// bouge à droite si les cases sont sur la même ligne et que le n° colonne de target = n° colonne de clic+1
+        let mouvHaut = l-1==l2 && c2==c// bouge en haut si les cases sont sur la même colonne et que le n° ligne de target = n° ligne de clic-1
+        let mouvBas = l+1==l2 && c2==c// bouge en bas si les cases sont sur la même colonne et que le n° ligne de target = n° ligne de clic+1
 
-	}
+        let adjacent = mouvBas || mouvHaut || mouvGauche || mouvDroite // si un des mouvements existe alors les cases sont adjacentes
 
-}
+        if(adjacent){ // si elles sont adjacentes on switche les cases
+            let imgClic = caseClic.src
+            let imgTarget = caseTarget.src
 
-	</script>
+            caseClic.src = imgTarget
+            caseTarget.src = imgClic // échange des images 
+
+            coups += 1;
+            document.querySelector("#coups").innerHTML = coups
+        }
+        
+        let controlGrille =[]
+        let grilles = document.querySelectorAll('img')
+        
+        grilles.forEach(grille=>{
+            let place = grille.src.split('/images/')
+            console.log("place :"+ place)
+            let nb = place[1].split('.')
+            console.log("nb :"+nb)
+            let n = parseInt(nb[0])
+            console.log("n : "+n)
+            controlGrille.push(n)
+        })
+        console.log(controlGrille)
+        
+
+        //contrôle si les cases sont dans le bon ordre
+        if(controlGrille[0]==1 && controlGrille[1]==2 && controlGrille[2]==3 && controlGrille[3]==4 && controlGrille[4]==5 && controlGrille[5]==6 && controlGrille[6]==7 && controlGrille[7]==8 && controlGrille[8]==9 && controlGrille[9]==10 && controlGrille[10]==11 && controlGrille[11]==12 && controlGrille[12]==13 && controlGrille[13]==14 && controlGrille[14]==15 && controlGrille[15]==16){
+            arreter() //arrêter le chrono
+            alert('Vous avez gagné la partie ! BRAVO !')
+            let myTime = chrono.textContent
+
+            if(localStorage.getItem('bestTime')==null){
+                localStorage.setItem('bestTime',myTime)
+            }else{
+                if(myTime<localStorage.getItem('bestTime')){
+                    localStorage.setItem('bestTime',myTime)
+                }
+            }  // introduit le temps dans le localstorage si il est meilleur
+        } 
+
+    }
+
+
+
+
+    </script>
+
 </body>
 </html>

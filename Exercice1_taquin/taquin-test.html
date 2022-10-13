@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<style>
+		.piece, .piececachee{
+			text-align: center;
+			line-height: 120px;
+			font-size: 20px;
+		}
+		#check{
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+	</div>
+	
+	<div class="container" style="position: relative; display: block; width: 100%;max-width: 480px; height: auto; margin: auto; font-family: 'Lato', Calibri, Arial, sans-serif">
+		<h1>Jeu du taquin</h1>
+		<div class="chrono">Chrono :</div>
+		
+		<button id="melange"> Melanger et jouer</button>
+		<div id="jeu" style="position: relative ;width: 480px;height: 480px;margin-top: 10px; display: flex;" >
+			
+			<div class="piececachee"  place ="0" style="position: absolute; display:block; cursor: pointer ; left:0; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122); visibility: hidden;"></div>
+			<div class="piece" test="0" place ="1" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="2" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="3" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 0; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="4" style="position: absolute; display:block; cursor: pointer ; left:0; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="5" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="6" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="7" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 120px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="8" style="position: absolute; display:block; cursor: pointer ; left:0px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="9" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="10" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="11" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 240px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="12" style="position: absolute; display:block; cursor: pointer ; left:0px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="13" style="position: absolute; display:block; cursor: pointer ; left:120px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="14" style="position: absolute; display:block; cursor: pointer ; left:240px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			<div class="piece" test="0" place ="15" style="position: absolute; display:block; cursor: pointer ; left:360px; top: 360px; width:120px; height:120px; border-radius:10px; border:1px solid black; box-shadow: rgba(0,0,0,7) -1px 2px 5px 1px; box-sizing:border-box; background-color: rgb(1, 122, 122);"></div>
+			
+		</div>
+		<button id="check"> Vérifier la grille </button>
+	</div>
+	<script type="text/javascript">
+		 
+		function getRandomInt(max) {
+		return Math.floor(Math.random() * max);
+		} 
+        const btnStart = document.querySelector('#jouer')
+		const btnMix = document.querySelector("#melange")
+		const check = document.querySelector('#check')
+		let heures = 0
+		let minutes = 0
+		let secondes = 0
+
+
+		const jeu = document.querySelector("#jeu")
+		console.log(jeu)
+
+		const pieces = jeu.querySelectorAll(".piece")
+		console.log(pieces)
+
+		
+		var paquet = [ 1, 2, 3, 4, 5, 6 ,7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+		var bonOrdre = [ 1, 2, 3, 4, 5, 6 ,7, 8, 9, 10, 11, 12, 13, 14, 15]
+		
+		
+
+		
+		
+
+		
+		
+		//écrire les chiffres dans les cases
+		
+		
+		btnMix.addEventListener('click',function(){
+			var paquet = [ 1, 2, 3, 4, 5, 6 ,7, 8, 9, 10, 11, 12, 13, 14, 15]
+			for (let i = 0; i < 14; i++) {
+                let j = Math.floor(Math.random() * paquet.length); 
+                let temp = paquet[i];
+                paquet[i] = paquet[j];
+                paquet[j] = temp; //échange des cartes pour les mélanger
+            }
+			
+            console.log(paquet);
+
+			pieces.forEach( elem=>{
+				let nb = paquet[0]
+				elem.innerText = nb
+				elem.setAttribute('test',nb)
+				paquet.shift()
+				
+			})
+			
+			
+		})
+		
+		pieces.forEach(element => {
+				
+				// retourne l'attribut place dans la case 
+			
+				element.innerHTML = element.getAttribute('place')
+				
+				element.addEventListener("click" , function(e){
+
+				//vérifie la pièce cliquée
+					console.log('Numéro de pièce cliquée :'+element.getAttribute('place'))
+
+					//récupère la pièce cachée et sa position initiale
+					const cachee = jeu.querySelector('.piececachee')
+					var posLeftCachee = parseInt(cachee.style['left']) 
+					var posTopCachee = parseInt(cachee.style['top'])
+
+					console.log("Left cachée initiale:"+posLeftCachee+" px")
+					console.log("Top cachée initiale:"+posTopCachee+" px")
+
+
+					// récupère la position initiale de la touche cliquée
+					var mleft = parseInt(element.style['left'])
+					var mtop = parseInt(element.style['top'])
+
+					console.log("Left initial cliquée :"+mleft+" px")
+					console.log("Top initial cliquée :"+mtop+" px")
+
+					if(
+					((posLeftCachee-mleft) == 120 && posTopCachee == mtop) || 
+					((posLeftCachee-mleft) == -120 && posTopCachee == mtop) ||
+					((posTopCachee-mtop) == 120 && posLeftCachee == mleft) ||
+					((posTopCachee-mtop) == -120 && posLeftCachee == mleft)
+					) 
+					{
+						
+						cachee.style.left = mleft+'px'
+						cachee.style.top = mtop+'px'
+						//attribue la position de la touche cliquée à la touche cachée
+
+						pieces[element.getAttribute('place')-1].style.left = `${posLeftCachee}`+'px' 
+						pieces[element.getAttribute('place')-1].style.top = `${posTopCachee}`+'px'
+						// la pièce cliquée prend la place de la pièce cachée
+						console.error('deplacement effectué')
+						
+
+					}else{
+						console.error('déplacement non autorisé')
+					}
+
+				})
+			
+		})
+
+
+		check.addEventListener('click',function(){
+			let tab=[]
+			let cellules = document.querySelectorAll('.piece')
+			cellules.forEach(cellule=>{
+				
+				contenu = cellule.textContent
+				tab.push(contenu)
+				
+
+			})
+			console.log(tab)
+
+			// if( tab[0]==bonOrdre[0] && (tab[1]==bonOrdre[1]) && (tab[2]==bonOrdre[2]) && (tab[3]==bonOrdre[3]) && (tab[4]==bonOrdre[4]) && (tab[5]==bonOrdre[5]) && (tab[6]==bonOrdre[6]) && (tab[7]==bonOrdre[7]) && (tab[8]==bonOrdre[9]) && (tab[10]==bonOrdre[10]) && (tab[11]==bonOrdre[11]) && (tab[12]==bonOrdre[12]) && (tab[13]==bonOrdre[13]) && (tab[14]==bonOrdre[14])){
+			// 	alert ('Gagné ! ')
+			// 	tab=[]
+			// }else{
+			// 	alert('Essayez encore :-(')
+			// 	console.log('Essayez encore !')
+			// 	tab=[]
+			// 	console.log("ordre actuel :"+tab)
+			// 	console.log("ordre correct :"+bonOrdre)
+				
+			// }
+
+		})
+
+		
+
+		
+
+		
+
+	
+
+	</script>
+</body>
+</html>
