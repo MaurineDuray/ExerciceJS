@@ -62,13 +62,13 @@
         <div id="game"></div>
         <strong><div class="chrono">00:00:00</div></strong>
         
-       
+        <button id="jouer">Jouer</button>
     </div>
 
     <script>
 
         let game = document.querySelector('#game')
-        
+        let jouer = document.querySelector('#jouer')
         let point = document.querySelector('.point')
         let valeurs = ['1','1','2','2','3','3','4','4','5','5','6','6','7','7','8','8','9','9','10','10']
         
@@ -179,16 +179,15 @@
         
         
         window.onload = function() {
-            
             mix()
             construct()
            
-        
+        }
         
        let choice = []
-       
+        jouer.addEventListener('click',function(){
             
-           
+            demarrer() // démarre le chrono
             
             let carteImg = document.querySelectorAll('img')
             carteImg.forEach(element => {
@@ -198,54 +197,48 @@
             });
 
             let j = 0
-            let paire = 1
+            let paire = 0 
             carteImg.forEach(elem=>{
                 elem.addEventListener('click', function(){
-                   demarrer()
+                   
                     
                     if(elem.getAttribute('vue')=='false'){
                         
                         //tant que je n'ai pas choisi deux cases je change l'attribut de la case en stay et je push la data de la cas choisie ds un tableau 
-                        
+                        if(j<2){ 
                             
                             let data = parseInt(elem.getAttribute('data'))
-                            carteImg.forEach(element=>{
-                                let attri = elem.getAttribute('vue')
-                            })
+                            
+                            let attri = elem.getAttribute('vue')
+                            
                             elem.setAttribute('vue','stay')
                             elem.src = "./images/"+data+".png"
                             choice.push(data)
                             console.log(choice)
                         
                             j++
-                        
-
-                        
-
+                            
+                        }
 
                         //une fois que j=2 je compare les deux valeurs du tableau et si c'est égal pour chaque case qui a l'attribut stay deviendra true 
-                        while(j==2){
-                            if(j>2){
-                            alert ('Une paire à la fois ! ')
-                            }
+                        if(j==2){
                             if(choice[0]==choice[1] ){
                                 carteImg.forEach(element=>{
                                     let attribute = element.getAttribute('vue')
                                    
                                     if(attribute == 'stay'){
                                         element.setAttribute('vue',true)
+                                    
                                     }
-
-                                        
+                                })
+                                paire++
                                         point.innerHTML = "Nombre de paires trouvées : "+paire
                                         console.log(paire +' paire(s) trouvée(s)')
                                 //initialisation du nombre de paires trouvées 
-                                })
-                               paire = (paire+1)
                                 
 
                                 //une fois que j'ai 10 paires le jeu recommence 
-                                if(paire ==11){
+                                if(paire ==10){
                                 
                                     arreter() // une fois dix paires trouvées, je récupère le temps et comparaison avec le temps stocké
                                     let myTime = chrono.textContent
@@ -264,35 +257,31 @@
                                 }
                         
                         //si les deux valeurs ne sont pas égales
-                            }else{
-                                console.log('raté')
-                                carteImg.forEach(element=>{
-                                    setTimeout(()=>{
-                                        let attribute = element.getAttribute('vue','stay')
-                                        if(attribute=="true"){
-                                            element.setAttribute('vue',true)
-                                        }
-                                        if(attribute == "stay"){
-                                            element.src = "./images/dos.jpg"
-                                            element.setAttribute('vue',false)
-                                        }
-
-                                    },1000)
-                                })
-                            }
-
+                        }else{
+                            console.log('raté')
+                            carteImg.forEach(element=>{
+                                let attribute = element.getAttribute('vue','stay')
+                                
+                                    if(attribute == "stay"){
+                                        element.src = "./images/dos.jpg"
+                                        element.setAttribute('vue',false)
+                                    }
+                                
+                               
+                            })
+                        }
                         choice=[]
                         j=0
 
                         }
-                    
                     }  
                 }) 
             })
             
              
-        }       
-            
+                
+        })    
+    
 
         
         
