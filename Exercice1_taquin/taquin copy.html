@@ -43,7 +43,7 @@
         div{
             width: 100%;
         }
-        #pause{
+        #start{
             width: 40%;
             background-color: rgb(255, 163, 5);
             color: black;
@@ -67,11 +67,6 @@
         .chrono{
             font-size: 28pt;
         }
-        h4{
-            width: 100%;
-            margin-bottom: 20px;
-            color:white;
-        }
     </style>
 </head>
 <body>
@@ -80,14 +75,13 @@
 	</div>
     <div class="container">
         <h1>Jeu du taquin</h1>
-        <h4>Faites glisser les cases pour jouer...</h4>
         <div class="model"></div>
         <div class="game">
 
 
         </div>
         <div id="appuyer"><strong>APPUYEZ SUR START POUR COMMENCER</strong></div>
-        <div><button id="pause">PAUSE</button></div>
+        <div><button id="start">START</button></div>
         <div>Nombre de coups: <span id="coups"></span></div>
         <div class="bestTime"></div>
         <div class="chrono">00:00:00</div>
@@ -95,9 +89,6 @@
 
     <script>
 //chrono
-    let pause = document.querySelector('#pause')
-   
-    
     let chrono = document.querySelector('.chrono')
     let secondes = 0
     let minutes = 0
@@ -179,8 +170,8 @@
     }
  //fin function chrono
 
-    
-  
+
+    let start = document.querySelector('#start')
     let appuie = document.querySelector('#appuyer')
     var ligne = 4
     var colonne = 4
@@ -195,10 +186,20 @@
 
     let game = document.querySelector('.game')
 
-    
-
     window.onload = function(){
+        for(let l=0; l<ligne ;l++){
+            for(let c = 0; c<colonne ; c++){
+                const carre = document.createElement('img')
+                carre.id = l.toString()+" - "+c.toString() //id="0-1" numero de ligne-numero de colonne
+                carre.src = "images/"+bonOrdre.shift()+".jpg"
 
+               
+                game.append(carre) // associer les cases a la div game
+            }
+        }
+    }
+
+    start.addEventListener('click', function(){
         let ordre = ["16","4","5","9","10","14","1","15","2","7","3","12","6","8","11","13"]
         game.innerHTML=""
         appuie.innerHTML=""
@@ -223,22 +224,7 @@
             }
             
         }
-    
-    }
-
-    pause.addEventListener('click',function(){
-        let content = pause.textContent
-        console.log(content)
-        if(content=="PAUSE"){
-            arreter()
-            pause.innerHTML="PLAY"
-        }
-        if(content=="PLAY"){
-            demarrer()
-            pause.innerHTML="PAUSE"
-        }
-        
-
+         
     })
 
     function dragStart(){
@@ -287,10 +273,6 @@
 
             caseClic.src = imgTarget
             caseTarget.src = imgClic // échange des images 
-
-            //évite de jouer avec le temps mis sur pause
-            demarrer()
-            pause.innerHTML="PAUSE"
 
             coups += 1;
             document.querySelector("#coups").innerHTML = coups

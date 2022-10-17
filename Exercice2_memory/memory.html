@@ -200,82 +200,81 @@
             let paire = 0 
             carteImg.forEach(elem=>{
                 elem.addEventListener('click', function(){
-                        let test = elem.getAttribute('vue')
-                        console.log('statut : '+test)
-                        if(test=='false'){
-                            //tant que je n'ai pas choisi deux cases je change l'attribut de la case en stay et je push la data de la cas choisie ds un tableau 
-                            if(j<2){ 
-                                let data = parseInt(elem.getAttribute('data'))
-                                
-                                let attri = elem.getAttribute('vue')
-                                
-                                if(attri !='stay' && (attri!='true')){
-                                    elem.setAttribute('vue','stay')
-                                    elem.src = "./images/"+data+".png"
-                                    choice.push(data)
-                                }
-                                
-                                
-                                j++
-                                
-                            }
+                   
+                    
+                    if(elem.getAttribute('vue')=='false'){
+                        
+                        //tant que je n'ai pas choisi deux cases je change l'attribut de la case en stay et je push la data de la cas choisie ds un tableau 
+                        if(j<2){ 
+                            
+                            let data = parseInt(elem.getAttribute('data'))
+                            
+                            let attri = elem.getAttribute('vue')
+                            
+                            elem.setAttribute('vue','stay')
+                            elem.src = "./images/"+data+".png"
+                            choice.push(data)
+                            console.log(choice)
+                        
+                            j++
+                            
+                        }
 
-                             //une fois que j=2 je compare les deux valeurs du tableau et si c'est égal pour chaque case qui a l'attribut stay deviendra true 
-                                if(j==2){
-                                    if(choice[0]==choice[1] ){
-                                        carteImg.forEach(element=>{
-                                            let attribute = element.getAttribute('vue')
-                                            console.log(attribute)
-                                            if(attribute == 'stay'){
-                                                element.setAttribute('vue',true)
-                                            
-                                            }
-                                            
-                                            
-                                        })
-                                        paire++
-                                                point.innerHTML = "Nombre de paires trouvées : "+paire
-                                                console.log(paire +' paire(s) trouvée(s)')
-                                        //initialisation du nombre de paires trouvées 
-                                        
-
-                                        //une fois que j'ai 10 paires le jeu recommence 
-                                        if(paire ==10){
-                                            
-                                            arreter() // une fois dix paires trouvées, je récupère le temps et comparaison avec le temps stocké
-                                            let myTime = chrono.textContent
-                                            
-                                            alert('vous avez terminé le jeu avec un temps de :'+myTime)
-
-                                            if(localStorage.getItem('montemps')==null){
-                                                localStorage.setItem('montemps',myTime)
-                                            }else{
-                                                if(myTime<localStorage.getItem('montemps')){
-                                                    localStorage.setItem('montemps',myTime)
-                                                }
-                                            }
-                                            recommence() 
-
-                                        }
+                        //une fois que j=2 je compare les deux valeurs du tableau et si c'est égal pour chaque case qui a l'attribut stay deviendra true 
+                        if(j==2){
+                            if(choice[0]==choice[1] ){
+                                carteImg.forEach(element=>{
+                                    let attribute = element.getAttribute('vue')
+                                   
+                                    if(attribute == 'stay'){
+                                        element.setAttribute('vue',true)
                                     
-                                    //si les deux valeurs ne sont pas
-                                    }else{
-                                        
-                                        console.log('raté')
-                                        carteImg.forEach(element=>{
-                                            let attribute = element.getAttribute('vue')
-                                            console.log(attribute)
-                                            if(attribute == "stay"){
-                                                element.src = "./images/dos.jpg"
-                                                element.setAttribute('vue',false)
-                                            }
-                                        })
                                     }
-                                    choice=[]
-                                    j=0
+                                })
+                                paire++
+                                        point.innerHTML = "Nombre de paires trouvées : "+paire
+                                        console.log(paire +' paire(s) trouvée(s)')
+                                //initialisation du nombre de paires trouvées 
+                                
+
+                                //une fois que j'ai 10 paires le jeu recommence 
+                                if(paire ==10){
+                                
+                                    arreter() // une fois dix paires trouvées, je récupère le temps et comparaison avec le temps stocké
+                                    let myTime = chrono.textContent
+                                    
+                                    alert('vous avez terminé le jeu avec un temps de :'+myTime)
+
+                                    if(localStorage.getItem('montemps')==null){
+                                        localStorage.setItem('montemps',myTime)
+                                    }else{
+                                        if(myTime<localStorage.getItem('montemps')){
+                                            localStorage.setItem('montemps',myTime)
+                                        }
+                                    }
+                                    recommence() 
 
                                 }
-                            }  
+                        
+                        //si les deux valeurs ne sont pas égales
+                        }else{
+                            console.log('raté')
+                            carteImg.forEach(element=>{
+                                let attribute = element.getAttribute('vue','stay')
+                                
+                                    if(attribute == "stay"){
+                                        element.src = "./images/dos.jpg"
+                                        element.setAttribute('vue',false)
+                                    }
+                                
+                               
+                            })
+                        }
+                        choice=[]
+                        j=0
+
+                        }
+                    }  
                 }) 
             })
             
