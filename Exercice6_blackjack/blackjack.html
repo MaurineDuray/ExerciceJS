@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BlackJack</title>
     <style>
         .body{
             width: 100%;
@@ -38,8 +38,9 @@
         <div class="portefeuille">
             Votre portefeuille compte : 
             <div id="argent"></div>
+
         </div>
-        <input type="number" name="mise" id="mise" value="10">
+        <input type="text" name="mise" id="mise" value="0">
         <h2>
             Ordinateur : <span id="ordinateur-somme"> </span>
         </h2>
@@ -64,12 +65,10 @@
 
        
 
-        if(mise<10){
-            mise=10
-        }else{
-            mise = parseInt(document.querySelector('#mise').value)
-        }
-        console.log(mise)
+        
+        let mymise = document.querySelector('#mise')
+        
+        console.log("mise"+mise)
 
         // si portefeuille dans le localStorage 
         var portefeuille = localStorage.getItem('portefeuilleBJ')
@@ -98,12 +97,20 @@
 
         var okePioche = true
 
-        window.onload = function() {
-            constructJeu()
-            mix()
-            jouer()
+       
+        mymise.addEventListener('change', function(){
+            mise = parseInt(mise.value)
+            if(mise>0){
+                mymise.remove()
+
+                constructJeu()
+                mix()
+                jouer()
+            }
+        })    
             
-        }
+            
+           
         function constructJeu() {
             let valeurs = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] //valeurs des cartes 
             let types = ["C", "D", "H", "S"] //types des cartes
@@ -214,6 +221,14 @@
             document.getElementById('ordinateur-somme').innerText = ordiSomme
             document.getElementById('ma-somme').innerText = maSomme
             document.getElementById('resultat').innerText = message
+
+            recommence()
+        }
+
+        function recommence(){
+            setInterval(()=>{
+                window.location.reload()
+            },3000)
         }
 
         function getValue(card){

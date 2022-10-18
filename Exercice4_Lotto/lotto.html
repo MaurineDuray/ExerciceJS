@@ -16,7 +16,10 @@
             text-align: center;
         }
         .actif{
-            background-color: rgb(159, 159, 159);
+            background-color: rgb(7, 220, 231);
+        }
+        .active{
+            background-color: rgb(7, 231, 14);
         }
         .nb{
             width:40px;
@@ -33,15 +36,15 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-        .tirage{
-            width: 100%;
-        }
+        
         .gain{
             width: 100%;
+            font-size: 35pt;
         }
         .tirage{
             width: 100%;
             text-align: center;
+            flex-wrap: nowrap;
         }
         .pot{
             width: 100%;
@@ -55,6 +58,7 @@
             margin-top: 20px;
             width: 250px;
             margin-bottom: 50px;
+           
         }
         h4{
             margin-top: 15px;
@@ -63,19 +67,48 @@
         .numero{
             margin-top: 15px;
         }
+        #numerosTires{
+            display: flex;
+            justify-content: center;
+        }
+        .boules{
+            background-color: blue;
+            color: white;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            line-height: 100px;
+            font-size: 30pt;
+        }
+        .etoiles{
+            background-color: rgb(0, 255, 30);
+            color: white;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            line-height: 100px;
+            font-size: 30pt;
+        }
+        #resultfinal{
+            display: none;
+        }
+        #mytirage{
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <div>
 		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
 	</div>
-    <div class="container">
+    <div class="container" id="container0">
         
         <div class="pot">
             <div class="reste"></div>
             Votre portefeuille compte : <div class="euro"></div>
             <label for="mise"> Miser : </label>
-            <input type="number" name="mise" id="mise" value="10">€
+            <input type="text" name="mise" id="mise" placeholder=" minimum 10€">€
         </div>
     
         <h4>Choisissez 5 numéros et une étoile et cliquez sur jouer !  </h4>
@@ -173,7 +206,14 @@
     
             <button id="jouer"> Jouer </button>
         </div>
-    
+
+    </div>
+
+    <div class="container" id="resultfinal">
+        <h2>Votre Tirage</h2>
+        <div id="mytirage">
+
+        </div>
         <div class="tirage">
             <h2>Numéros du lotto</h2>
             <p id="numerosTires"></p>
@@ -182,16 +222,20 @@
         <div class="gain">
             <h4 id="argent"></h4>
         </div>
-    
     </div>
+        
+    
+    
     
     <script>
+        let mytirage = document.querySelector('#mytirage')
+        let container = document.querySelector('#container0')
+        let container1 = document.querySelector('#resultfinal')
+
         let boules = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49]
         let etoiles = [1,2,3,4,5,6,7,8,9,10]
         let boulesRestantes = boules.slice(0)
         let etoilesRestantes = etoiles.slice(0)
-
-        
 
         let numeros = []
         let tirage = []
@@ -200,8 +244,6 @@
         let complementaire = []
         let comptirage =[]
         
-
-
 
         let cases = document.querySelectorAll('.nb')
         let choisis = document.querySelectorAll('.actif')
@@ -212,13 +254,15 @@
         let argent = document.querySelector('#argent')
         let compl = document.querySelectorAll('.btncomp')
 
-        // initialisation des valeurs de mise et de pot 
-        let mise = document.querySelector("#mise").value
-        console.log(mise)
         let euro = document.querySelector('.euro')
         if(localStorage.getItem('portefeuille')){
             //récupération du portefeuille restant dans le localStorage
-            euro.innerHTML=localStorage.getItem('portefeuille')
+            
+            if((localStorage.getItem('portefeuille'))<0){
+                euro.innerHTML="0€"
+            }else{
+                euro.innerHTML=localStorage.getItem('portefeuille')
+            }
         }else{
             euro.innerHTML="100€"
         }
@@ -242,43 +286,83 @@
         //selection des numéros 
             cases.forEach(element => {
             element.addEventListener('click', function(){
-                    if(numeros.length<5){
+                    if(numeros.length<6){
                         var active = element.getAttribute('data')
                        //test si numéro déjà sélectionné pour l'ajouter au tableau des chiffres choisis
 
-                        if(active=='false'){
+                        if(active=='false' && numeros.length<5){
                             element.classList.add('actif')
                             element.setAttribute('data', 'true')
-                            numeros.push(element.textContent)
+                            numeros.push(element.innerHTML)
+                            console.log(numeros)
+                        }else if(active=='true'){
+
+                            element.classList.remove('actif')
+                            element.setAttribute('data', 'false')
+                            let search = element.innerHTML
+                            let res = numeros.indexOf(search)
+                            if(res==4){
+                                numeros.pop()
+                            }else{
+                                 numeros.splice(res,1)
+                            }
+                            console.log(res)
+                            console.log(numeros)
                         }
-                        
-                        nbChoisi.innerHTML="Nombre de numéros choisis = "+numeros.length
-                        
-                    }else{
-                        alert('vous avez sélectionné vos 5 numéros ')
                     }
                 }) 
-
             });
 
         //selection des étoiles
         compl.forEach(elem=>{
             elem.addEventListener('click',function(){
-                if(complementaire.length<2){
+                if(complementaire.length<3){
                     var actif = elem.getAttribute('data')
-                        if(actif=='false'){
-                            elem.classList.add('actif')
+                    console.log(actif)
+                        if(actif=='false' && complementaire.length<2){
+                            elem.classList.add('active')
                             elem.setAttribute('data','true')
-                            complementaire.push(elem.textContent)
+                            complementaire.push(elem.innerHTML)
+                            console.log(complementaire)
+                        }else if(actif=='true'){
+                            elem.classList.remove('active')
+                            elem.setAttribute('data', 'false')
+                            let search = elem.innerHTML
+                            let res = complementaire.indexOf(search)
+                            
+                                complementaire.splice(res,1)
+                            
+                            console.log(res)
+                            console.log(complementaire)
                         }
-                }else{
-                        alert('vous avez sélectionné vos 2 étoiles ')
+                        
                 }
+                
             })
+           
+                
         })
 
+        
+            
+       
+        
+
+       
+
+       
         //click sur le bouton jouer 
         jouer.addEventListener('click', function(){
+            
+            //récupération de la mise, initialisée à 10 par défaut
+            let mise = document.querySelector("#mise").value
+            if(mise=="" || mise<10){
+                mise = 10
+            }else{
+                mise = parseInt(mise)
+            }
+            console.log(mise)
+
             nbChoisi.innerHTML= numeros 
 
             cases.forEach(carre=>{
@@ -290,30 +374,60 @@
             })
 
             
-
-            if(numeros=='' || (complementaire=='')){
-                nbChoisi.innerText = "Veuillez choisir vos numéros avant le tirage"
-            }else{
+            // tirage une fois tous les numéros choisis
+            
                 tirage = []
                 comptirage = []
 
-                //tirer les 5 numeros 
+                //tirer les 5 numeros et des 2 complémentaires
                 while(tirage.length<5){
                     tirage.push(boulesRestantes.splice(Math.floor(Math.random()*boulesRestantes.length),1)[0]);
                 }
+
                 while(comptirage.length<2){
                     comptirage.push(etoilesRestantes.splice(Math.floor(Math.random()*etoilesRestantes.length),1)[0]);
                 } 
-                console.log("tirage : " +tirage)
-                tirages.innerHTML= "<strong>"+tirage +" + "+ comptirage+"</strong>"
-            }
-            
-            console.log("mes numéros:" +numeros)
-            //contrôle des numéros choisi dans le tirage
-                
-            
 
+                console.log("vos numeros : " +tirage)
+                 
+               //affichages mon tirage
+                container.style.display='none'
+                container1.style.display='block'
+                for(let m =0 ; m<5 ; m++){
+                    let boules = document.createElement('div')
+                    boules.setAttribute('class', 'boules')
+                    boules.innerHTML = numeros[m]
+                    
+                    mytirage.appendChild(boules)
+                }
+                for(let n =0 ; n<2 ; n++){
+                    let etoiles = document.createElement('div')
+                    etoiles.setAttribute('class', 'etoiles')
+                    etoiles.innerHTML = complementaire[n]
+                    
+                    mytirage.appendChild(etoiles)
+                }
+                
+               //affichages des boules tirées 
+                for(let i =0 ; i<5 ; i++){
+                    let boules = document.createElement('div')
+                    boules.setAttribute('class', 'boules')
+                    boules.innerHTML = tirage[i]
+                    
+                    tirages.appendChild(boules)
+                }
+                for(let j =0 ; j<2 ; j++){
+                    let etoiles = document.createElement('div')
+                    etoiles.setAttribute('class', 'etoiles')
+                    etoiles.innerHTML = comptirage[j]
+                    tirages.appendChild(etoiles)
+                }
+           
+
+
+            //contrôle des numéros choisi dans le tirage
                 let numeroGagnant = 0
+                
                 if(tirage[0]==numeros[0] || (tirage[0]==numeros[1]) || (tirage[0]==numeros[2]) || (tirage[0]==numeros[3])|| (tirage[0]==numeros[4])){
                     numeroGagnant = numeroGagnant+1
                     console.log("cond 1 oke")
@@ -339,7 +453,7 @@
                 console.log("nb numero ok"+numeroGagnant)
 
 
-                //controle etoile
+                //controle des étoiles
                 let comptGagnant=0
                 if(complementaire[0]==comptirage[0] || (complementaire[0]==comptirage[1] )){
                     comptGagnant = comptGagnant+1
@@ -351,7 +465,7 @@
 
                 console.log("étoiles"+comptGagnant)
             
-                // contrôle des gains 
+             // calcul des gains 
             if(numeroGagnant===0 && (comptGagnant===1)){
                 montant = 2.20
             }
@@ -383,24 +497,27 @@
                 montant = 2000000
             }
 
-        console.log(numeroGagnant)
-        console.log(montant +" €")
-        gain.innerHTML= numeroGagnant+"numéros trouvés <br>"+comptGagnant+ " complémentaire trouvé</br>Gains gagnés : "+montant+" € gagnés </br>"
+            console.log(numeroGagnant)
+            console.log(montant +" €")
 
-        console.log(numeroGagnant+comptGagnant)
-        
-        if((numeroGagnant+comptGagnant)>0){
-            portefeuille = portefeuille-mise+montant
-            euro.innerHTML= portefeuille
-            localStorage.setItem('portefeuille', portefeuille)
-        }else{
-            portefeuille = portefeuille - mise
-            euro.innerHTML= portefeuille
-            localStorage.setItem('portefeuille', portefeuille)
-        }
+            //affichage des résultats et des gains 
+            gain.innerHTML= montant+" € gagnés </br>"
+
+            
+            console.log(numeroGagnant+comptGagnant)
+            
+            //recalcul du portefeuille 
+            if((numeroGagnant+comptGagnant)>0){
+                portefeuille = portefeuille-mise +montant
+                euro.innerHTML= portefeuille
+                localStorage.setItem('portefeuille', portefeuille)
+            }else{
+                portefeuille = portefeuille - mise
+                euro.innerHTML= portefeuille
+                localStorage.setItem('portefeuille', portefeuille)
+            }
         })
-
-        
+    
     </script>
 </body>
 </html>
