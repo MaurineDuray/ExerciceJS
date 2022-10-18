@@ -36,6 +36,13 @@
     .coup{
         margin-top: 25px;
         width: 100%;
+        font-size: 18pt;
+    }
+    #question{
+        display: none;
+        width:100%;
+        font-size: 24pt;
+        Color: rgba(2, 84, 39, 0.561);
     }
 </style>
 <body>
@@ -63,8 +70,9 @@
             </div>   
         </div>
         <div class="coup">O commence ! Cliquez sur une case pour jouer !</div>
+        <p id="question"> Rejouer ? </p>
         <button id='rejouer' style="margin-top: 10px;">Rejouer</button>
-        <button id='restart' style="margin-top: 10px; margin-left: 10px;">Recommencer</button>
+        <button id='restart' style="margin-top: 10px; margin-left: 10px;">Recommencer à 0</button>
     </div>
    
 
@@ -79,6 +87,7 @@
         let coupsX = 0
         let coupsO = 0
 
+        let question = document.querySelector('#question')
         let restart = document.querySelector('#restart')
         let reJouer = document.querySelector('#rejouer')
         let piece = document.querySelector('.piece')
@@ -147,6 +156,7 @@
                         insert()
                         
                     }
+
                     
                 }
                 console.log("ligne1 : "+l1)
@@ -159,83 +169,111 @@
                     if((l1[0]=="O" && l1[1]=="O" && l1[2]=="O")||(l1[0]=="X" && l1[1]=="X" && l1[2]=="X")){
                         if(l1[0]=="X"){
                             coupsX = coupsX +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }else{
                             coupsO = coupsO +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }
                     }else if((l2[0]=="O" && l2[1]=="O" && l2[2]=="O")||(l2[0]=="X" && l2[1]=="X" && l2[2]=="X")){
                         if(l2[0]=="X"){
                             coupsX = coupsX +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }else{
                             coupsO = coupsO +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }
                     }else if((l3[0]=="O" && l3[1]=="O" && l3[2]=="O")||(l3[0]=="X" && l3[1]=="X" && l3[2]=="X")){
                         if(l3[0]=="X"){
                             coupsX = coupsX +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }else{
                             coupsO = coupsO +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }
                     }else if((l1[0]=="O" && l2[0]=="O" && l3[0]=="O")||(l1[0]=="X" && l2[0]=="X" && l3[0]=="X")){
                         if(l1[0]=="X"){
                             coupsX = coupsX +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }else{
                             coupsO = coupsO +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }
                     }else if((l1[1]=="O" && l2[1]=="O" && l3[1]=="O")||(l1[1]=="X" && l2[1]=="X" && l3[1]=="X")){
                         if(l1[1]=="X"){
                             coupsX = coupsX +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }else{
                             coupsO = coupsO +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }
                     }else if((l1[2]=="O" && l2[2]=="O" && l3[2]=="O")||(l1[2]=="X" && l2[2]=="X" && l3[2]=="X")){
                         if(l1[2]=="X"){
                             coupsX = coupsX +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }else{
                             coupsO = coupsO +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }
                     }else if((l1[0]=="O" && l2[1]=="O" && l3[2]=="O")||(l1[0]=="X" && l2[1]=="X" && l3[2]=="X")){
                         if(l1[0]=="X"){
                             coupsX = coupsX +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }else{
                             coupsO = coupsO +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }
                     }else if((l1[2]=="O" && l2[1]=="O" && l3[0]=="O")||(l1[2]=="X" && l2[1]=="X" && l3[0]=="X")){
                         if(l1[2]=="X"){
                             coupsX = coupsX +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }else{
                             coupsO = coupsO +1
-                            rejouer()
+                            question.style.display='block'
+                            unclick()
                         }
                     }
-                   vider()
+                   
+                    function unclick(){
+                        cases.forEach(elem=>{
+                            elem.style.pointerEvents='none'
+                        })
+                    }
+                    
                     //Affichage des points
                     coup.innerHTML="le joueur X = "+coupsX+" coups gagnants</br> le joueur O = "+coupsO+" coups gagnants"
                     
+                    
                     //si un des deux joueur gagne la partie, vider les tableaux et les cases 
                     function rejouer(){
-                        
+                            question.style.display='none'
                             cases.forEach(elem=>{
                                 elem.innerHTML=""
                             
                             })
                          
                     }
-                     
+                    
                     reJouer.addEventListener('click',function(){
+                        
+                        
+                        cases.forEach(elem=>{
+                            elem.style.pointerEvents=""               
+                        })  
                         rejouer()
                     })
                    
@@ -251,6 +289,9 @@
 
             
         })
+
+        
+        
         // problème, je ne peux réecrire de X ou O dans le tableau 
 
 
