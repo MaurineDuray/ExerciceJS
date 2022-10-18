@@ -57,7 +57,7 @@
 	</div>
     <div class="container">
         <h1>Jeu de memory </h1>
-        <div class="point"><strong>Cliquez sur jouer pour commencer</strong></div>
+        <div class="point"><strong>Cliquez sur deux cases pour commencer à jouer</strong></div>
         <div class="bestTime"></div>
         <div id="game"></div>
         <strong><div class="chrono">00:00:00</div></strong>
@@ -82,7 +82,7 @@
 
         let bestTime = document.querySelector('.bestTime')
         let temps = localStorage.getItem('montemps')
-        if(temps==''){
+        if(temps==null){
             bestTime.innerHTML="Vous n'avez pas de meilleur temps pour l'instant"
         }else{
             bestTime.innerHTML="Actuellement, votre meilleur temps est de : "+temps
@@ -277,7 +277,7 @@
                                             element.setAttribute('vue',false)
                                         }
 
-                                    },1000)
+                                    },500)
                                 })
                             }
 
@@ -292,19 +292,6 @@
             
              
         }       
-            
-
-        
-        
-
-        
-        
-       
-
-
-
-
-        
     </script>
 </body>
 </html>
