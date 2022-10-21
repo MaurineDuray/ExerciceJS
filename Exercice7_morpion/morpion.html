@@ -248,6 +248,7 @@
                         }
                     }
                    
+                    // empêcher le clic une fois le point marqué pour l'un ou l'autre
                     function unclick(){
                         cases.forEach(elem=>{
                             elem.style.pointerEvents='none'
@@ -268,9 +269,8 @@
                          
                     }
                     
-                    reJouer.addEventListener('click',function(){
-                        
-                        
+                    // au clic sur bouton rejouer, je réactive la possibilité de clic
+                    reJouer.addEventListener('click',function(){x
                         cases.forEach(elem=>{
                             elem.style.pointerEvents=""               
                         })  
