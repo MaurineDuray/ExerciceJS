@@ -21,8 +21,10 @@
         #photo{
             
             width: 400px;
-            position: relative;
+            position: absolute;
             cursor: grab;
+            top: 300px;
+            left: 100px;
             
         }
         .header{
@@ -90,6 +92,13 @@
             myimage.style.height= localStorage.getItem('hauteur')+"px"
             myimage.style.width= localStorage.getItem('largeur')+"px"
 
+            myimage.style.transform = localStorage.getItem('rotation')
+            
+            
+            myimage.style.top = localStorage.getItem('top')+'px'
+            myimage.style.left = localStorage.getItem('left')+'px'
+
+
         });
 
         myimage.addEventListener("wheel", function(){
@@ -108,19 +117,16 @@
                     localStorage.setItem('largeur',(myimage.offsetWidth))
                     localStorage.setItem('hauteur',(myimage.offsetHeight))
                 },200)
-            
-                
-                
+             
             }else{
                 myimage.style.width = (width + 3)+'px';
                 myimage.style.height = (height + 2)+'px';
                 
                 setTimeout(()=>{
-                    localStorage.setItem('largeur', (myimage.offsetWidth))
+                    localStorage.setItem('largeur',(myimage.offsetWidth))
                     localStorage.setItem('hauteur',(myimage.offsetHeight))
                 },200)
             
-                
             }
 
             
@@ -131,11 +137,13 @@
                 rotation = (rotation+angle)%360;
                 myimage.style.transform = `rotate(${rotation}deg)`
             
+                localStorage.setItem('rotation', 'rotate('+rotation+'deg)')
         })
         rotMoins.addEventListener("click",function(){
                 rotation = (rotation-angle)%360;
                 myimage.style.transform = `rotate(${rotation}deg)`
-            
+
+                localStorage.setItem('rotation', 'rotate('+rotation+'deg)')
         })
 
         myimage.onmousedown = function(event) {
@@ -159,8 +167,7 @@
             function onMouseMove(event) {
             moveAt(event.pageX, event.pageY);
 
-            localStorage.setItem('left', event.pageX)
-            localStorage.setItem('top',event.pageY)
+           
             }
 
             // déplace l'image à l’évènement mousemove
@@ -172,6 +179,11 @@
                 plan.removeEventListener('mousemove', onMouseMove);
                 myimage.onmouseup = null;
             };
+
+            setInterval(()=>{
+                localStorage.setItem('top', (myimage.offsetTop))
+                localStorage.setItem('left', (myimage.offsetLeft))
+            },200)
 
         };
 
