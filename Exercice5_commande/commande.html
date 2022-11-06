@@ -1,52 +1,212 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commande</title>
+    <title>Document</title>
+
+    <style>
+        #plus{
+            width: 50px;
+            height: 50px;
+            background-color: rgb(129, 193, 33);
+            border-radius: 3px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 29pt;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+        .formulaire{
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+           
+        }
+        #commande{
+            background-color: rgb(214, 161, 14);
+            padding: 10px;
+            width: 250px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            color: white;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .add{
+            margin-top: 10px;
+        }
+        .add input{
+            margin-left: 10px;
+        }
+        input{
+            height: 30px;
+            margin-top: 20px;
+
+        }
+    </style>
 </head>
 <body>
     <div>
 		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
 	</div>
-    <form action="post">
-        <div class="form-group">
-            <label for="idCommande">IdCommandePk</label>
-            <input type="number" name="idCommande" id="idCommande">
-        </div> 
-        <div class="form-group">
-             <label for="date">Date</label>
-            <input type="date" name="date" id="date">
-        </div>
-        <div class="form-group">
-            <label for="name">Nom et Prénom</label>
-            <input type="text" name="name" id="name">
-        </div>
-        <div class="form-group">
-            <label for="adresse">Adresse</label>
-            <input type="text" name="adressse" id="adresse">
-        </div>
-        <div class="form-group">
-            <label for="cp">Code postal</label>
-            <input type="text" name="cp" id="cp">
-        </div>
-        
-        <div class="form-group">
-            <label for="ville">Ville</label>
-            <input type="text" name="ville" id="ville">
-        </div>
-        
-        <div class="form-group">
-            <label for="quantite"></label>
-            <label for="article"></label>
-            <label for="prix"></label>
-            <input type="number" name="quantite" id="quantite" value="1">
-            <input type="text" name="article" id="article">
-            <input type="text" name="prix" id="prix"  >
-        </div>
+
+    <div class="formulaire">
+        <form action="commande.php" method="POST">
+            <h1>Bon de commande</h1>
+            <div class="form-group" id="Cid">
+                <label for="idCommande">IdCommandePk</label>
+                <input type="number" name="idCommande" id="idCommande" placeholder="Numéro de commande">
+            </div> 
+            <div class="form-group" id="Cdate">
+                 <label for="date">Date</label>
+                <input type="date" name="date" id="date" >
+            </div>
+            <div class="form-group" id="Cname">
+                <label for="name">Nom et Prénom</label>
+                <input type="text" name="name" id="name" placeholder="Nom et prénom">
+            </div>
+            <div class="form-group" id='Cadresse'>
+                <label for="adresse">Adresse</label>
+                <input type="text" name="adressse" id="adresse" placeholder="Rue, boite">
+            </div>
+            <div class="form-group" id="Ccp">
+                <label for="cp">Code postal</label>
+                <input type="text" name="cp" id="cp" placeholder="Code postal">
+            </div>
+            
+            <div class="form-group" id="Cville">
+                <label for="ville">Ville</label>
+                <input type="text" name="ville" id="ville" placeholder="Ville">
+            </div>
+            <h3>Ajoutez vos produits </h3>
+            <div id="app">
+               
+                <div></div>
+               
+            </div>
+            <div id="plus" >+</div><div class="clic">Cliquez pour ajouter un produit</div>
+            <div type="submit" id="commande">PASSER COMMANDE</div>
+           
+
+        </form>
         
 
-    </form>
+    </div>
+   
+    
+    
+
+
+    <script type="text/javascript">
+       
+        let form = document.querySelector('.formulaire')
+        let plus = document.querySelector('#plus')
+        let app = document.querySelector('#app')
+        let ajout = document.querySelector('.add')
+        
+        let commander = document.querySelector('#commande')
+        
+        let count = 0
+
+        let coord = []
+        let tab= [];
+       
+        
+
+        plus.addEventListener('click',()=>{
+            app.insertAdjacentHTML('beforeend','<div class="add prod"><input type="number" class="quant" placeholder="Quantité"><input  class="name" type="text" placeholder="Nom du produit" ><input  class="prix" type="number" placeholder="Prix unitaire"></div>')
+            count++
+            console.log(count+' produits')
+        })
+
+        
+        
+
+        commander.addEventListener('click', ()=>{
+
+            let inputs = document.getElementsByTagName('input')
+            console.log(inputs)
+
+            
+            console.log('commande passée avec '+count+' produits')
+            let produits = document.querySelectorAll('.prod')
+
+            // for(let i = 0; i<count; i++){
+            //     tab[i] = new Array()
+            //     tab[i][0]= ajout.nodeValue(0).value
+            //     tab[i][1]= ajout.nodeValue(1).value
+            //     tab[i][2]= ajout.nodeValue(2).value
+            // }
+            // console.log(tab)
+            let i =0
+            produits.forEach(element => {
+
+                tab[i] = new Array()
+                let quant = element.querySelector('.quant')
+                tab[i][0]= quant.value+"pièce(s)"
+                let name = element.querySelector('.name')
+                tab[i][1]= name.value
+                let prix = element.querySelector('.prix')
+                tab[i][2]= prix.value+"€"
+                i++
+            });
+            console.log(tab)
+            tableau = JSON.stringify(tab)
+
+            localStorage.setItem('commande', tableau)
+            
+            let id = coord[0]=document.querySelector('#idCommande').value
+            let date = coord[1]=document.querySelector('#date').value
+            let name = coord[2]=document.querySelector('#name').value
+            let adresse = coord[3]=document.querySelector('#adresse').value
+            let cp = coord[4]=document.querySelector('#cp').value
+            let ville = coord[5]=document.querySelector('#ville').value
+            console.log(coord)
+
+            localStorage.setItem('coordonnées', JSON.stringify(coord))
+
+
+            document.querySelector('.formulaire h1').innerHTML = "Votre ticket"
+            document.querySelector('#Cid').innerHTML="Numéro de commande: "+id
+            document.querySelector('#Cdate').innerHTML = "Date de la commande: "+date
+            document.querySelector('#Cname').innerHTML = "Client: "+name
+            document.querySelector('#Cadresse').innerHTML = "Rue: "+adresse
+            document.querySelector('#Ccp').innerHTML = "Code postal: "+cp
+            document.querySelector('#Cville').innerHTML = "Ville: "+ville
+
+
+            let bon = JSON.parse(localStorage.getItem('commande'))
+            let compte = bon.length
+            console.log(compte)
+            app.innerHTML=" "
+            plus.remove()
+            commander.innerHTML="<a href='#'>REPASSER COMMANDE</a>"
+            let btn = commander
+            document.querySelector('.clic').remove()
+            for(let m=0; m<compte; m++){
+                let line = document.createElement('div')
+                line.setAttribute('class','ligne')
+                line.innerHTML = bon[m][0]+" - "+ bon[m][1]+" - "+ bon[m][2]
+                app.appendChild(line)
+            }
+
+            form.style.border = "1px solid black"
+            form.style.width= "40%"
+            form.style.paddingBottom = "25px"
+
+            btn.addEventListener('click',()=>{
+                location.reload()
+            })
+            
+        })
+
+    </script>
 </body>
 </html>

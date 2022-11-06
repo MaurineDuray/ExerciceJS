@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image - action</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            
+            align-items: center;
+            background-color: rgb(25, 25, 25);
+            flex-wrap: wrap;
+        }
+        .image{
+            width: 300px;
+            height: 300px;
+            margin-left: 100px;
+            
+            transform: rotate(0);
+            background-image: url(images/tj-holowaychuk-iGrsa9rL11o-unsplash.jpg);
+            background-size: 180%;
+            transform-origin: 50% 50%;
+            transition: 1s;
+
+        }
+        #rotate{
+            width: 50px;
+            height:50px;
+            margin-top: 5px;
+            margin-left: 5px;
+            position: absolute;
+            cursor: pointer;
+        }
+        #zoom{
+            width: 50px;
+            height : 50px;
+            position: absolute;
+            right: 1px;
+            cursor:pointer;
+        }
+        .fleche{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .reset{
+            color: white;
+            margin-top: 17px;
+            margin-left: 20px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+	</div>
+    <div class="image">
+        <div class="rotate">
+            <img id="rotate" src="images/rotate.png" alt="">
+            
+        </div>
+
+        <img id="zoom" src="images/zomm.png" alt="">
+        
+    </div>
+    <div class="fleche">
+        <img id="gauche" src="images/gauche.png" alt="">
+        <div class="reset"> RESET </div>
+        <img id="droite" src="images/droite.png" alt="">
+    </div>
+    
+
+
+    <script>
+        let image = document.querySelector('.image')
+        let rotate = document.querySelector('#rotate')
+        let zoom = document.querySelector('#zoom')
+        
+        let valZoom = localStorage.getItem('zoom')
+        image.style.backgroundSize = valZoom+"%"
+        let mvtleft = localStorage.getItem('left')
+        image.style.marginLeft = mvtleft+"px"
+
+        let gauche = document.querySelector('#gauche')
+        let droite = document.querySelector('#droite')
+
+        const reset = document.querySelector('.reset')
+        
+        
+        
+        rotate.addEventListener('click', function(){
+            rotation();
+
+            
+        })
+
+        zoom.addEventListener('click', function(){
+            zoomin()
+            let loupe = parseInt(getComputedStyle(image).getPropertyValue("background-size")+20)
+            localStorage.setItem('zoom',loupe+20);
+        })
+
+
+        
+        gauche.addEventListener('click', function(){
+            moveleft()
+            mvmt = parseInt(getComputedStyle(image).getPropertyValue("margin-left"))
+            localStorage.setItem('left',mvmt+100);
+            
+        })
+        droite.addEventListener('click', function(){
+            moveright()
+            mvmt = parseInt(getComputedStyle(image).getPropertyValue("margin-left"))
+            localStorage.setItem('left',mvmt+100);
+        })
+
+        function rotation(){
+           image.style.transform = "rotate("+360+"deg)"
+        }
+
+        function zoomin(){
+            let loupe = parseInt(getComputedStyle(image).getPropertyValue("background-size"))
+            image.style.backgroundSize = loupe+20+"%"
+        }
+
+        function moveright(){
+            let mvmt = parseInt(getComputedStyle(image).getPropertyValue("margin-left"))
+            image.style.marginLeft = mvmt+100+"px"
+        }
+        function moveleft(){
+            let mvmt = parseInt(getComputedStyle(image).getPropertyValue("margin-left"))
+            image.style.marginLeft = mvmt-100+"px"
+        }
+        
+
+        reset.addEventListener('click', function(){
+            localStorage.setItem('left',100);
+            image.style.marginLeft = "100px"
+
+            localStorage.setItem('zoom',180);
+            image.style.backgroundSize = "180%"
+        })
+      
+
+    </script>
+</body>
+</html>

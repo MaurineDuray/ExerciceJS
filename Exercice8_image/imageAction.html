@@ -4,153 +4,200 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image - action</title>
+    <title>ImageManip</title>
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
         body{
             width: 100%;
+            overflow: hidden;
             height: 100vh;
-            
-            align-items: center;
-            background-color: rgb(25, 25, 25);
-            flex-wrap: wrap;
         }
         .image{
-            width: 300px;
-            height: 300px;
-            margin-left: 100px;
             
-            transform: rotate(0);
-            background-image: url(images/tj-holowaychuk-iGrsa9rL11o-unsplash.jpg);
-            background-size: 180%;
-            transform-origin: 50% 50%;
-            transition: 1s;
-
+            height: 100vh;
+            width: 100%;
+            background-color: rgb(69, 69, 69);
+            overflow: hidden;
         }
-        #rotate{
-            width: 50px;
-            height:50px;
-            margin-top: 5px;
-            margin-left: 5px;
+        #photo{
+            
+            width: 400px;
             position: absolute;
-            cursor: pointer;
+            cursor: grab;
+            top: 300px;
+            left: 100px;
+            
         }
-        #zoom{
-            width: 50px;
-            height : 50px;
+        .header{
+            z-index:2000;
             position: absolute;
-            right: 1px;
-            cursor:pointer;
+            width: 100%;
         }
-        .fleche{
+        .tourne{
+            margin-left: 50%;
+            transform: translateX(-50%);
+            margin-top: 30px;
+            position: absolute;
+            z-index: 5000;
             width: 100%;
             display: flex;
+            flex-wrap: nowrap;
             justify-content: center;
-            cursor: pointer;
-        }
-        .reset{
             color: white;
-            margin-top: 17px;
-            margin-left: 20px;
-            margin-right: 20px;
+        }
+        
+        .tourne img{
+            width: 50px;
+            height: 50px;
             cursor: pointer;
+            padding: 0px 10px 0px 10px;
+            margin-top: 195px;
+        }
+        p{
+            position: absolute;
+            margin-top: 170px;
+            width: 100%;
+            text-align: center;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <div>
+    <div class="header">
 		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
 	</div>
+    <p>Pour déplacer, cliquer et déplacer. Pour zoomer, scroller sur l'image. </p>
+    <div class="tourne">
+        
+        <img id="rotatePlus" src="images/rotatecopie.png" alt="">
+        <p> Rotation </p>
+        <img id="rotateMoins" src="images/rotate.png" alt="">
+        
+    </div>
+
     <div class="image">
-        <div class="rotate">
-            <img id="rotate" src="images/rotate.png" alt="">
-            
+        <div>
+             <img id="photo" src="images/image.jpg" alt="">
         </div>
-
-        <img id="zoom" src="images/zomm.png" alt="">
-        
+       
     </div>
-    <div class="fleche">
-        <img id="gauche" src="images/gauche.png" alt="">
-        <div class="reset"> RESET </div>
-        <img id="droite" src="images/droite.png" alt="">
-    </div>
-    
-
-
+   
     <script>
-        let image = document.querySelector('.image')
-        let rotate = document.querySelector('#rotate')
-        let zoom = document.querySelector('#zoom')
-        
-        let valZoom = localStorage.getItem('zoom')
-        image.style.backgroundSize = valZoom+"%"
-        let mvtleft = localStorage.getItem('left')
-        image.style.marginLeft = mvtleft+"px"
+        let plan = document.querySelector('.image')
+        let myimage = document.querySelector('#photo')
 
-        let gauche = document.querySelector('#gauche')
-        let droite = document.querySelector('#droite')
+        let rotPlus = document.querySelector('#rotatePlus')
+        let rotMoins = document.querySelector('#rotateMoins')
+        
+        let rotation = 0
 
-        const reset = document.querySelector('.reset')
-        
-        
-        
-        rotate.addEventListener('click', function(){
-            rotation();
+        const angle = 10
+       
+        window.addEventListener('load', (event) => {
+            plan.style.display= "flex"
+            plan.style.alignItems="center"
+            plan.style.justifyContent="center"
+
+            myimage.style.height= localStorage.getItem('hauteur')+"px"
+            myimage.style.width= localStorage.getItem('largeur')+"px"
+
+            myimage.style.transform = localStorage.getItem('rotation')
+            
+            
+            myimage.style.top = localStorage.getItem('top')+'px'
+            myimage.style.left = localStorage.getItem('left')+'px'
+
+
+        });
+
+        myimage.addEventListener("wheel", function(){
+            console.log('toto')
+            var width = myimage.clientWidth
+            var height = myimage.clientHeight
+            console.log(height)
+            console.log(width)
+            
+            console.info(event.deltaY)
+            if(event.deltaY>0 && width>=200){
+                myimage.style.width = (width - 3)+'px';
+                myimage.style.height = (height - 2)+'px';
+                
+                setTimeout(()=>{
+                    localStorage.setItem('largeur',(myimage.offsetWidth))
+                    localStorage.setItem('hauteur',(myimage.offsetHeight))
+                },200)
+             
+            }else{
+                myimage.style.width = (width + 3)+'px';
+                myimage.style.height = (height + 2)+'px';
+                
+                setTimeout(()=>{
+                    localStorage.setItem('largeur',(myimage.offsetWidth))
+                    localStorage.setItem('hauteur',(myimage.offsetHeight))
+                },200)
+            
+            }
 
             
+
         })
 
-        zoom.addEventListener('click', function(){
-            zoomin()
-            let loupe = parseInt(getComputedStyle(image).getPropertyValue("background-size")+20)
-            localStorage.setItem('zoom',loupe+20);
-        })
-
-
-        
-        gauche.addEventListener('click', function(){
-            moveleft()
-            mvmt = parseInt(getComputedStyle(image).getPropertyValue("margin-left"))
-            localStorage.setItem('left',mvmt+100);
+        rotPlus.addEventListener("click",function(){
+                rotation = (rotation+angle)%360;
+                myimage.style.transform = `rotate(${rotation}deg)`
             
+                localStorage.setItem('rotation', 'rotate('+rotation+'deg)')
         })
-        droite.addEventListener('click', function(){
-            moveright()
-            mvmt = parseInt(getComputedStyle(image).getPropertyValue("margin-left"))
-            localStorage.setItem('left',mvmt+100);
+        rotMoins.addEventListener("click",function(){
+                rotation = (rotation-angle)%360;
+                myimage.style.transform = `rotate(${rotation}deg)`
+
+                localStorage.setItem('rotation', 'rotate('+rotation+'deg)')
         })
 
-        function rotation(){
-           image.style.transform = "rotate("+360+"deg)"
-        }
+        myimage.onmousedown = function(event) {
 
-        function zoomin(){
-            let loupe = parseInt(getComputedStyle(image).getPropertyValue("background-size"))
-            image.style.backgroundSize = loupe+20+"%"
-        }
+            let shiftX = event.clientX - myimage.getBoundingClientRect().left;
+            let shiftY = event.clientY - myimage.getBoundingClientRect().top;
 
-        function moveright(){
-            let mvmt = parseInt(getComputedStyle(image).getPropertyValue("margin-left"))
-            image.style.marginLeft = mvmt+100+"px"
-        }
-        function moveleft(){
-            let mvmt = parseInt(getComputedStyle(image).getPropertyValue("margin-left"))
-            image.style.marginLeft = mvmt-100+"px"
-        }
-        
+            myimage.style.position = 'absolute';
+            myimage.style.zIndex = 1000;
+            plan.append(myimage);
 
-        reset.addEventListener('click', function(){
-            localStorage.setItem('left',100);
-            image.style.marginLeft = "100px"
+            moveAt(event.pageX, event.pageY);
 
-            localStorage.setItem('zoom',180);
-            image.style.backgroundSize = "180%"
-        })
-      
+            // Déplace l' image aux cordonnées (pageX, pageY)
+            // Prenant en compte les changements initiaux
+            function moveAt(pageX, pageY) {
+                myimage.style.left = pageX - shiftX + 'px';
+                myimage.style.top = pageY - shiftY + 'px';
+            }
+
+            function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+
+           
+            }
+
+            // déplace l'image à l’évènement mousemove
+            plan.addEventListener('mousemove', onMouseMove);
+
+            
+            // dépose l'image', enlève les gestionnaires d’évènements dont on a pas besoin
+            myimage.onmouseup = function() {
+                plan.removeEventListener('mousemove', onMouseMove);
+                myimage.onmouseup = null;
+            };
+
+            setInterval(()=>{
+                localStorage.setItem('top', (myimage.offsetTop))
+                localStorage.setItem('left', (myimage.offsetLeft))
+            },200)
+
+        };
+
+        myimage.ondragstart = function() {
+            return false;
+        };
 
     </script>
 </body>

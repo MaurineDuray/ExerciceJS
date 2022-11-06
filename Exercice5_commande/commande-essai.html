@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande</title>
+    
+    <style>
+        .croix{
+            color: rgb(241, 3, 3);
+        }
+        #supp{
+            width: 50px;
+            height: 50px;
+            font-weight: 800;
+            font-size: 24pt;
+            background-color: rgb(133, 198, 35);
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        #supp a{
+            text-decoration: none;
+            color: white;
+        }
+        .btnPlus{
+            height: 40px !important;
+            
+            position: absolute;
+            background-color: rgb(29, 181, 29);
+            color: azure;
+            font-size: 24pt;
+            border-radius: 5px;
+            padding: 10px;
+            line-height: 20px;
+            margin-top: -10px;
+            margin-left: 20px;
+
+            cursor: pointer;
+            border: none;
+
+        }
+        #new{
+            margin-top: 25px;
+        }
+
+        .commande{
+            background-color: rgb(135, 181, 59);
+            padding: 15px;
+            border-radius: 10px;
+            width: 150px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+        }
+        li{
+            margin-top: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div>
+		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: 0; left:100px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+	</div>
+    <form action="" method="POST">
+        <div class="form-group">
+            <label for="idCommande">IdCommandePk</label>
+            <input type="number" name="idCommande" id="idCommande">
+        </div> 
+        <div class="form-group">
+             <label for="date">Date</label>
+            <input type="date" name="date" id="date">
+        </div>
+        <div class="form-group">
+            <label for="name">Nom et Prénom</label>
+            <input type="text" name="name" id="name">
+        </div>
+        <div class="form-group">
+            <label for="adresse">Adresse</label>
+            <input type="text" name="adressse" id="adresse">
+        </div>
+        <div class="form-group">
+            <label for="cp">Code postal</label>
+            <input type="text" name="cp" id="cp">
+        </div>
+        
+        <div class="form-group">
+            <label for="ville">Ville</label>
+            <input type="text" name="ville" id="ville">
+        </div>
+        
+        <div id="app">
+		
+			<h3>Bon de commande</h3>
+			<todolist cle="courses"></todolist>
+			<ul>
+				<!-- <li class="article">
+                    <input class="quantite" type="number" placeholder="Quantité">
+					<input class="product" type="text" />
+                    <input class="prix" type="number" placeholder="prix"><span>€</span>
+					<span id="delete"> X</span>
+				</li> -->
+				<li>
+                    <input class="quantite" type="number" placeholder="Quantité">
+					<input class='article' type="text" value="" placeholder="Nouveau produit" /> 
+                    <input class="prix" type="number" placeholder="Prix unitaire">
+				</li>
+				<li >
+                    <input class="quantite" type="number" placeholder="Quantité">
+					<input class='article' type="text" value="" placeholder="Nouveau produit" /> 
+                    <input class="prix" type="number" placeholder="Prix unitaire">
+				</li>
+				<li >
+                    <input class="quantite" type="number" placeholder="Quantité">
+					<input class='article' type="text" value="" placeholder="Nouveau produit" /> 
+                    <input class="prix" type="number" placeholder="Prix unitaire">
+				</li>
+				<li >
+                    <input class="quantite" type="number" placeholder="Quantité">
+					<input class='article' type="text" value="" placeholder="Nouveau produit" /> 
+                    <input class="prix" type="number" placeholder="Prix unitaire">
+				</li>
+				<li >
+                    <input class="quantite" type="number" placeholder="Quantité">
+					<input class='article' type="text" value="" placeholder="Nouveau produit" /> 
+                    <input class="prix" type="number" placeholder="Prix unitaire">
+				</li>
+				
+			</ul>
+		</div>
+
+        <div class="commande"> Passer commande </div>
+
+    </form>
+
+	<script>
+        let commande = document.querySelector('.commande')
+        let li = document.querySelectorAll('li')
+        let quantite = document.querySelectorAll('.quantite')
+        let article = document.querySelectorAll('.article')
+        let prix = document.querySelectorAll('.prix')
+
+        
+
+        commande.addEventListener('click', function(){
+            quantite.forEach(element => {
+                for(let i=0; i<=5; i++){
+                    let value = quantite[i].value
+                    col1.push(value)
+                    console.log('toto')
+                    console.log(col1)
+                }
+            });
+            article.forEach(element => {
+                for(let i=0; i<=5; i++){
+                    let value = article[i].value
+                    col2.push(value)
+                    console.log('toto')
+                    console.log(col2)
+                }
+            });
+            prix.forEach(element => {
+                for(let i=0; i<=5; i++){
+                    let value = prix[i].value
+                    col3.push(value)
+                    console.log('toto')
+                    console.log(col3)
+                }
+            });
+        })
+
+    </script>	
+</body>
+
+</html>
