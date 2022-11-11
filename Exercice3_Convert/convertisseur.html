@@ -1,900 +1,304 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convertisseur monnaie</title>
+  
+    <title>Convertisseur</title>
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    
+
+  
+    <!-- linking style.css file-->
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        body{
-            background-color: darkslategray;
-        }
-        .container{
-            width: 70%;
-            margin: 0 auto;
+        body {
+            background-color: aliceblue;
             
+        }
+        
+        h1{
+            width: 100%;
             text-align: center;
-            margin-top: 100px;
-            border: 1px solid black;
-            padding: 30px;
-            background-color: rgb(255, 255, 255);
-            border-radius: 10px;
         }
-        #dest{
-            margin-top: 20px;
+        
+        hr {
+            border-top: 2px solid black;
+            width: 40%;
+            margin-bottom: 55px;
         }
-        h2{
-            margin-bottom: 20px;
-        }
-        h3{
-            margin-top: 30px;
+       
+        .moneyConvert{
+            width: 40%;
+            margin: 0 auto;
+            text-align: center;
+            border: solid 2px black;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top : 20px;
         }
         input{
-            height: 30px;
-            border-radius: 20px;
-            width: 50%;
-            padding: 10px;
-            margin-top: 25px;
-        }
-        input[type='submit']{
-            margin-top: 20px;
-            width: 200px;
-            cursor: pointer;
-        }
-        #monnaie, #monnaiedest{
-            height: 50px;
-            border-radius: 20px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            width: 100%;
+            height: 40px;
+            margin-bottom: 10px;
             text-align: center;
-            padding:10px;
         }
         
     </style>
-
 </head>
+  
 <body>
     <div>
 		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: -40px; left:20px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
 	</div>
-    <div class="container">
-        <h1>Convertisseur de monnaie</h1>
-        
-        <p>Sélectionnez la monnaie de départ et la monaie de conversion</p>
-        <div class="form-container">
-            <select name="monnaieOrigin" id="monnaie"  >
-                <option value=""selected>Selectionnez une devise</option>
-                <option value="euro" >Euro</option>
-                <option value="dollar" >Dollar</option>
-                <option value="sterling">Sterling</option>
-                <option value="frsuisse">Franc Suisse</option>
-                <option value="rouble">Rouble</option>
-                <option value="yen">Yen</option>
-                <option value="Baht">Baht</option>
-                <option value="dollarCan">Dollar Canadien</option>
-                <option value="real">Real</option>
-                <option value="rand">Rand</option>
-            </select>
-            
-            
-        </div>
-       
-
-        <div class="form-container">
-           <p>Convertir en :</p>
-            <select name="monnaieDest" id="monnaiedest">
-                <option value="" selected>Selectionnez une devise</option>
-                <option value="euro" >Euro</option>
-                <option value="dollar">Dollar</option>
-                <option value="sterling">Sterling</option>
-                <option value="frsuisse">Franc Suisse</option>
-                <option value="rouble">Rouble</option>
-                <option value="yen">Yen</option>
-                <option value="Baht">Baht</option>
-                <option value="dollarCan">Dollar Canadien</option>
-                <option value="real">Real</option>
-                <option value="rand">Rand</option>
-            </select>
-        </div>
-        <p>Entrez la valeur à convertir ci-dessous</p>
-        <input type="text" name="origin" id="origin" value="1">
-        
-
-        <h3></h3>
-    </div>
-
-
-    <script>
-        const origin = document.querySelector('#monnaie')
-        const convert = document.querySelector('#monnaiedest')
-        let tabOrigin =[]
-        let tabConvert = []
-        
-        const valeur = document.querySelector("#origin")
-        
-        const btnConvert = document.querySelector('#btnConvert')
-
-        const container = document.querySelector('h3')
-
+    <h1>Convertisseur de monnaies</h1>    
   
-       
-        origin.addEventListener('change', function(){
-        var textOriginSelected = origin.options[origin.selectedIndex].text
-        console.log("devise d'origine:"+textOriginSelected)
-        tabOrigin.unshift(textOriginSelected)
-        convert.addEventListener('change', function(){
-        var textDestSelected = convert.options[convert.selectedIndex].text
-        console.log("devise finale:"+textDestSelected)
-        tabConvert.unshift(textDestSelected)
+    <hr>
+    <div class="moneyConvert">
+  
+        <div class="main">
+  
+            <div class="form-group">
+                <label for="amount">
+                    <h3>Montant à convertir</h3>
+                </label>
+                <input type="text" 
+class="form-control " 
+                       placeholder="1" 
+                       id="amount" value="1">
 
-
-            convertValue=1 //valeur par défaut
-
-            switch(tabOrigin[0]){
-                case "Euro":
-                    switch(tabConvert[0]){
-                        case "Euro":
-                            container.innerText = convertValue;
-                        break;
-                        case "Dollar":
-                            var result = convertValue*0.98
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.88
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*0.97
-                        break;
-                        case "Rouble":
-                            var result = convertValue*59.01
-                        break;
-                        case "Yen":
-                            var result = convertValue*141.93
-                        break;
-                        case "Baht":
-                            var result = convertValue*36.92
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*1.36
-                        break;
-                        case "Real":
-                            var result = convertValue*5.31
-                        break;
-                        case "Rand":
-                            var result = convertValue*17.74
-                        break;
-
-                    };
-                break;
-                case "Dollar":
-                    switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*1.02
-                        break;
-                        case "Dollar":
-                            var result = convertValue
+            </div>
+  
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Convertir des</span>
+                        </div>
+                        <select class="form-control from" id="sel1">
                             
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.90
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*0.99
-                        break;
-                        case "Rouble":
-                            var result = convertValue*60.20
-                        break;
-                        case "Yen":
-                            var result = convertValue*144.74
-                        break;
-                        case "Baht":
-                            var result = convertValue*37.67
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*1.38
-                        break;
-                        case "Real":
-                            var result = convertValue*5.41
-                        break;
-                        case "Rand":
-                            var result = convertValue*18.09
-                        break;
-
-                    };
-                break;
-                case "Sterling":
-                switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*1.14
-                        
-                        break;
-                        case "Dollar":
-                            var result = convertValue*1.11
-                        break;
-                        case "Sterling":
-                            var result = convertValue
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*1.10
-                        break;
-                        case "Rouble":
-                            var result = convertValue*67.12
-                        break;
-                        case "Yen":
-                            var result = convertValue*161.38
-                        break;
-                        case "Baht":
-                            var result = convertValue*42
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*1.54
-                        break;
-                        case "Real":
-                            var result = convertValue*6.03
-                        break;
-                        case "Rand":
-                            var result = convertValue*0.05
-                        break;
-
-                    };
-                break;
-                case "Franc Suisse":
-                switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*1.03
-                        break;
-                        case "Dollar":
-                            var result = convertValue*1.01
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.91
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue
-                        break;
-                        case "Rouble":
-                            var result = convertValue*60.89
-                        break;
-                        case "Yen":
-                            var result = convertValue*146.39
-                        break;
-                        case "Baht":
-                            var result = convertValue*38.10
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*1.40
-                        break;
-                        case "Real":
-                            var result = convertValue*5.47
-                        break;
-                        case "Rand":
-                            var result = convertValue*18.30
-                        break;
-
-                    };
-                break;
-                case "Rouble":
-                switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*0.017
-                        break;
-                        case "Dollar":
-                            var result = convertValue*0.017
+                            <option value="ARS">ARS - Peso Argentin </option>
+                            <option value="AUD">AUD - Dollar australien</option>
+                            <option value="BRL">BRL - Réal brésilien</option>
+                            <option value="CAD">CAD - Dollar canadien</option>
+                            <option value="CHF">CHF - Franc suisse</option>
+                            <option value="CLP">CLP - Peso chilien</option>
+                            <option value="CNY">CNY - Renminbi </option>
+                            <option value="CZK">CZK - Couronne tchèque</option>
+                            <option value="DKK">DKK - Couronne danoise</option>
+                            <option value="EUR">EUR - Euro </option>
+                            <option value="GBP">GBP - Livre sterling</option>
+                            <option value="HKD">HKD - Dollar Hong Kong</option>
+                            <option value="HRK">HRK - Kuna Croate</option>
+                            <option value="HUF">HUF - Forint</option>
+                            <option value="INR">INR - Roupie indienne </option>
+                            <option value="ISK">ISK - Couronne islandaise</option>
+                            <option value="JPY">JPY - Yen</option>
+                            <option value="KRW">KRW - Won sud-coréen </option>
+                            <option value="NZD">NZD - Dollar Néo-Zélandais</option>
+                            <option value="RON">RON - Leu roumain</option>
+                            <option value="RUB">RUB - Rouble russe</option>
+                            <option value="SEK">SEK - couronne suédoise</option>
+                            <option value="SGD">SGD - Dollar de Singapour</option>
+                            <option value="THB">THB - Baht </option>
+                            <option value="TRY">TRY - livre turque </option>
+                            <option value="TWD">TWD - Nouveau dollar de taiwan</option>
+                            <option value="USD">USD - Dollar américain</option>
                             
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.015
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*0.016
-                        break;
-                        case "Rouble":
-                            var result = convertValue
-                        break;
-                        case "Yen":
-                            var result = convertValue*2.40
-                        break;
-                        case "Baht":
-                            var result = convertValue*0.63
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*0.023
-                        break;
-                        case "Real":
-                            var result = convertValue*0.09
-                        break;
-                        case "Rand":
-                            var result = convertValue*0.30
-                        break;
-
-                    };
-                break;
-                case "Yen":
-                switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*0.0070
-                        break;
-                        case "Dollar":
-                            var result = convertValue*0.0069
                             
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.0062
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*0.0068
-                        break;
-                        case "Rouble":
-                            var result = convertValue*0.42
-                        break;
-                        case "Yen":
-                            var result = convertValue
-                        break;
-                        case "Baht":
-                            var result = convertValue*0.26
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*0.0096
-                        break;
-                        case "Real":
-                            var result = convertValue*0.37
-                        break;
-                        case "Rand":
-                            var result = convertValue*0.12
-                        break;
+                        </select>
+                    </div>
+                </div>
+  
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">En</span>
+                        </div>
+                        <select class="form-control to" id="sel2">
+                            <option value="ARS">ARS - Peso Argentin </option>
+                            <option value="AUD">AUD - Dollar australien</option>
+                            <option value="BRL">BRL - Réal brésilien</option>
+                            <option value="CAD">CAD - Dollar canadien</option>
+                            <option value="CHF">CHF - Franc suisse</option>
+                            <option value="CLP">CLP - Peso chilien</option>
+                            <option value="CNY">CNY - Renminbi </option>
+                            <option value="CZK">CZK - Couronne tchèque</option>
+                            <option value="DKK">DKK - Couronne danoise</option>
+                            <option value="EUR">EUR - Euro </option>
+                            <option value="GBP">GBP - Livre sterling</option>
+                            <option value="HKD">HKD - Dollar Hong Kong</option>
+                            <option value="HRK">HRK - Kuna Croate</option>
+                            <option value="HUF">HUF - Forint</option>
+                            <option value="INR">INR - Roupie indienne </option>
+                            <option value="ISK">ISK - Couronne islandaise</option>
+                            <option value="JPY">JPY - Yen</option>
+                            <option value="KRW">KRW - Won sud-coréen </option>
+                            <option value="NZD">NZD - Dollar Néo-Zélandais</option>
+                            <option value="RON">RON - Leu roumain</option>
+                            <option value="RUB">RUB - Rouble russe</option>
+                            <option value="SEK">SEK - couronne suédoise</option>
+                            <option value="SGD">SGD - Dollar de Singapour</option>
+                            <option value="THB">THB - Baht </option>
+                            <option value="TRY">TRY - livre turque </option>
+                            <option value="TWD">TWD - Nouveau dollar de taiwan</option>
+                            <option value="USD">USD - Dollar américain</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+        <div id="finalAmount" class="text-center">
+                <h2>Valeur convertie: 
+                <p class="finalValue" >
+                </p>
+            </h2>
+        </div>
+    </div>
+    <div class="moneyConvert">
+        <h4>Convertisseur en bitcoin</h4>
+        <label for="bitnumber">Entrez la valeur à convertir </label>
+        <input type="text" id="bitnumber" value="1">
+        <select class="form-control to" id="sel3">
+            <option value="ARS">ARS - Peso Argentin </option>
+            <option value="AUD">AUD - Dollar australien</option>
+            <option value="BRL">BRL - Réal brésilien</option>
+            <option value="CAD">CAD - Dollar canadien</option>
+            <option value="CHF">CHF - Franc suisse</option>
+            <option value="CLP">CLP - Peso chilien</option>
+            <option value="CNY">CNY - Renminbi </option>
+            <option value="CZK">CZK - Couronne tchèque</option>
+            <option value="DKK">DKK - Couronne danoise</option>
+            <option value="EUR">EUR - Euro </option>
+            <option value="GBP">GBP - Livre sterling</option>
+            <option value="HKD">HKD - Dollar Hong Kong</option>
+            <option value="HRK">HRK - Kuna Croate</option>
+            <option value="HUF">HUF - Forint</option>
+            <option value="INR">INR - Roupie indienne </option>
+            <option value="ISK">ISK - Couronne islandaise</option>
+            <option value="JPY">JPY - Yen</option>
+            <option value="KRW">KRW - Won sud-coréen </option>
+            <option value="NZD">NZD - Dollar Néo-Zélandais</option>
+            <option value="RON">RON - Leu roumain</option>
+            <option value="RUB">RUB - Rouble russe</option>
+            <option value="SEK">SEK - couronne suédoise</option>
+            <option value="SGD">SGD - Dollar de Singapour</option>
+            <option value="THB">THB - Baht </option>
+            <option value="TRY">TRY - livre turque </option>
+            <option value="TWD">TWD - Nouveau dollar de taiwan</option>
+            <option value="USD">USD - Dollar américain</option>
+        </select>
+        <h2 id="total"></h2>
+    </div>
+  
+    <script>
+            const url = 'https://blockchain.info/ticker'; 
+            let i=0; 
+            let resultat = document.querySelector('.finalValue')
+            let montant = document.querySelector('#amount')
+            let monnaieorigine = 0
+            let monnaiefinale = 0
+            let origine = document.querySelector('#sel1')
+            let final = document.querySelector('#sel2')
 
-                    };
-                break;
-                case "Baht":
-                switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*0.027
-                        break;
-                        case "Dollar":
-                            var result = convertValue*0.027
-                            
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.024
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*0.026
-                        break;
-                        case "Rouble":
-                            var result = convertValue*1.60
-                        break;
-                        case "Yen":
-                            var result = convertValue*3.83
-                        break;
-                        case "Baht":
-                            var result = convertValue
-                            
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*0.037
-                        break;
-                        case "Real":
-                            var result = convertValue*0.027
-                        break;
-                        case "Rand":
-                            var result = convertValue*2.08
+            let money = document.querySelector('#bitnumber')
+            let country = document.querySelector('#sel3')
+            let total = document.querySelector('#total')
+            let bitcoin = 0
 
-                    };
-                break;
-                case "Dollar Canadien":
-                switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*0.74
-                        break;
-                        case "Dollar":
-                            var result = convertValue*0.72
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.65
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*0.71
-                        break;
-                        case "Rouble":
-                            var result = convertValue*43.52
-                        break;
-                        case "Yen":
-                            var result = convertValue*104.64
-                        break;
-                        case "Baht":
-                            var result = convertValue*27.33
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue
-                        break;
-                        case "Real":
-                            var result = convertValue*3.91
-                        break;
-                        case "Rand":
-                            var result = convertValue*13.08
-                        break;
-
-                    };
-                break;
-                case "Real":
-                switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*0.19
-                        break;
-                        case "Dollar":
-                            var result = convertValue*0.18
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.17
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*0.18
-                        break;
-                        case "Rouble":
-                            var result = convertValue*0.017
-                        break;
-                        case "Yen":
-                            var result = convertValue*10.0070
-                        break;
-                        case "Baht":
-                            var result = convertValue*6.96
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*0.26
-                        break;
-                        case "Real":
-                            var result = convertValue
-                        break;
-                        case "Rand":
-                            var result = convertValue*0.056
-                        break;
-
-                    };
-                break;
-                case "Rand":
-                switch(tabConvert[0]){
-                        case "Euro":
-                            var result = convertValue*0.056
-                        break;
-                        case "Dollar":
-                            var result = convertValue*0.055
-                        break;
-                        case "Sterling":
-                            var result = convertValue*0.05
-                        break;
-                        case "Franc Suisse":
-                            var result = convertValue*0.055
-                        break;
-                        case "Rouble":
-                            var result = convertValue*3.33
-                        break;
-                        case "Yen":
-                            var result = convertValue*8
-                        break;
-                        case "Baht":
-                            var result = convertValue*2.08
-                        break;
-                        case "Dollar Canadien":
-                            var result = convertValue*0.076
-                        break;
-                        case "Real":
-                            var result = convertValue*0.30
-                        break;
-                        case "Rand":
-                            var result = convertValue
-                        break;
-
-                    };
-                break;
-
+            if(localStorage.getItem('MonnaieBitcoin')){
+                country.value = localStorage.getItem('MonnaieBitcoin')
+            }
+            if(localStorage.getItem('MonnaieOrigine')){
+                origine.value = localStorage.getItem('MonnaieOrigine')
+            }
+            if(localStorage.getItem('MonnaieFinale')){
+                final.value = localStorage.getItem('MonnaieFinale')
             }
 
-            container.innerHTML = 1+" "+ tabOrigin[0]+ " est égal à "+ result +" "+tabConvert[0];
-            
 
-        }) 
-        
-        })
 
-        valeur.addEventListener('change', function(){
-            
-            let convertValue = valeur.value
-            convertValue = convertValue.replace(",",".")
-            convertValue = parseFloat(convertValue)
+            fetch(url)
+                .then(res=>{
+                    if(res.ok){
+                        res.json().then(data=>{
+                            console.log(data)
 
-            console.log(convertValue)
+                            for(const cle in data){
+                                if(cle === origine.value){
+                                    monnaieorigine = data[cle].last
+                                }
+                                if(cle === final.value){
+                                    monnaiefinale = data[cle].last
+                                }
+                                resultat.innerHTML = (monnaieorigine / monnaiefinale) * 1
 
-            console.log("Origines : "+tabOrigin)
-            console.log("Conversion : "+tabConvert)
-
-            //si la valeur est positive
-            if(convertValue > 0){ 
-                if(tabConvert[0] == tabOrigin[0]){
-                     // si la devise de départ est idem à la devise de conversion = erreur
-                    container.innerText = "Veuillez choisir deux devises différentes"
-                }else{
-                    // la devise sera convertie 
-                    switch(tabOrigin[0]){
-                        case "Euro":
-                            switch(tabConvert[0]){
-                                case "Euro":
-                                    container.innerText = convertValue;
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*0.98
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.88
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*0.97
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*59.01
-                                break;
-                                case "Yen":
-                                    var result = convertValue*141.93
-                                break;
-                                case "Baht":
-                                    var result = convertValue*36.92
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*1.36
-                                break;
-                                case "Real":
-                                    var result = convertValue*5.31
-                                break;
-                                case "Rand":
-                                    var result = convertValue*17.74
-                                break;
-
-                            };
-                        break;
-                        case "Dollar":
-                            switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*1.02
-                                break;
-                                case "Dollar":
-                                    var result = convertValue
+                                final.addEventListener('change',() => {
                                     
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.90
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*0.99
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*60.20
-                                break;
-                                case "Yen":
-                                    var result = convertValue*144.74
-                                break;
-                                case "Baht":
-                                    var result = convertValue*37.67
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*1.38
-                                break;
-                                case "Real":
-                                    var result = convertValue*5.41
-                                break;
-                                case "Rand":
-                                    var result = convertValue*18.09
-                                break;
+                                        if(cle === final.value){
+                                            monnaieorigine = data[cle].last
+                                            resultat.innerHTML = ""
+                                            resultat.innerHTML = (monnaieorigine / monnaiefinale)*montant.value 
 
-                            };
-                        break;
-                        case "Sterling":
-                        switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*1.14
+                                            localStorage.setItem('MonnaieFinale', final.value)
+                                        }
+                                        
+                                    
+                                })
+                                origine.addEventListener('change',() => {
+                                    if(cle === origine.value){
+                                        monnaiefinale = data[cle].last
+                                        let calcul =  monnaiefinale / monnaieorigine
+                                        resultat.innerHTML = ""
+                                        resultat.innerHTML = calcul
+                                        
+                                        localStorage.setItem('MonnaieOrigine', origine.value)
+                                    }
+                                })
                                 
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*1.11
-                                break;
-                                case "Sterling":
-                                    var result = convertValue
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*1.10
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*67.12
-                                break;
-                                case "Yen":
-                                    var result = convertValue*161.38
-                                break;
-                                case "Baht":
-                                    var result = convertValue*42
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*1.54
-                                break;
-                                case "Real":
-                                    var result = convertValue*6.03
-                                break;
-                                case "Rand":
-                                    var result = convertValue*0.05
-                                break;
+                                montant.addEventListener('input', () => {
+                                // si la valeur entrée sera 1 et pas de texte autorisé
+                                while (isNaN(montant.value)) {
+                                    montant.value = 1
+                                }
+                                resultat.innerHTML = monnaieorigine / monnaiefinale * montant.value
+        
+                                return i;
+                                })
 
-                            };
-                        break;
-                        case "Franc Suisse":
-                        switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*1.03
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*1.01
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.91
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*60.89
-                                break;
-                                case "Yen":
-                                    var result = convertValue*146.39
-                                break;
-                                case "Baht":
-                                    var result = convertValue*38.10
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*1.40
-                                break;
-                                case "Real":
-                                    var result = convertValue*5.47
-                                break;
-                                case "Rand":
-                                    var result = convertValue*18.30
-                                break;
+                                //convertisseur de bitcoin
+                                if(cle === country.value){
+                                    bitcoin = data[cle].last
+                                }
+                                //écouter le changement de valeur dans l'input 
+                                country.addEventListener('change',() => {
+                                    if(cle === country.value){
+                                        bitcoin = data[cle].last
+                                        let calcul =  bitcoin * money.value
+                                        total.innerHTML = ""
+                                        total.innerHTML = calcul 
 
-                            };
-                        break;
-                        case "Rouble":
-                        switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*0.017
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*0.017
-                                    
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.015
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*0.016
-                                break;
-                                case "Rouble":
-                                    var result = convertValue
-                                break;
-                                case "Yen":
-                                    var result = convertValue*2.40
-                                break;
-                                case "Baht":
-                                    var result = convertValue*0.63
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*0.023
-                                break;
-                                case "Real":
-                                    var result = convertValue*0.09
-                                break;
-                                case "Rand":
-                                    var result = convertValue*0.30
-                                break;
+                                        localStorage.setItem('MonnaieBitcoin', country.value)
+                                    }
+                                })
 
-                            };
-                        break;
-                        case "Yen":
-                        switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*0.0070
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*0.0069
-                                    
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.0062
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*0.0068
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*0.42
-                                break;
-                                case "Yen":
-                                    var result = convertValue
-                                break;
-                                case "Baht":
-                                    var result = convertValue*0.26
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*0.0096
-                                break;
-                                case "Real":
-                                    var result = convertValue*0.37
-                                break;
-                                case "Rand":
-                                    var result = convertValue*0.12
-                                break;
-
-                            };
-                        break;
-                        case "Baht":
-                        switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*0.027
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*0.027
-                                    
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.024
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*0.026
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*1.60
-                                break;
-                                case "Yen":
-                                    var result = convertValue*3.83
-                                break;
-                                case "Baht":
-                                    var result = convertValue
-                                    
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*0.037
-                                break;
-                                case "Real":
-                                    var result = convertValue*0.027
-                                break;
-                                case "Rand":
-                                    var result = convertValue*2.08
-
-                            };
-                        break;
-                        case "Dollar Canadien":
-                        switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*0.74
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*0.72
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.65
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*0.71
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*43.52
-                                break;
-                                case "Yen":
-                                    var result = convertValue*104.64
-                                break;
-                                case "Baht":
-                                    var result = convertValue*27.33
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue
-                                break;
-                                case "Real":
-                                    var result = convertValue*3.91
-                                break;
-                                case "Rand":
-                                    var result = convertValue*13.08
-                                break;
-
-                            };
-                        break;
-                        case "Real":
-                        switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*0.19
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*0.18
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.17
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*0.18
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*0.017
-                                break;
-                                case "Yen":
-                                    var result = convertValue*10.0070
-                                break;
-                                case "Baht":
-                                    var result = convertValue*6.96
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*0.26
-                                break;
-                                case "Real":
-                                    var result = convertValue
-                                break;
-                                case "Rand":
-                                    var result = convertValue*0.056
-                                break;
-
-                            };
-                        break;
-                        case "Rand":
-                        switch(tabConvert[0]){
-                                case "Euro":
-                                    var result = convertValue*0.056
-                                break;
-                                case "Dollar":
-                                    var result = convertValue*0.055
-                                break;
-                                case "Sterling":
-                                    var result = convertValue*0.05
-                                break;
-                                case "Franc Suisse":
-                                    var result = convertValue*0.055
-                                break;
-                                case "Rouble":
-                                    var result = convertValue*3.33
-                                break;
-                                case "Yen":
-                                    var result = convertValue*8
-                                break;
-                                case "Baht":
-                                    var result = convertValue*2.08
-                                break;
-                                case "Dollar Canadien":
-                                    var result = convertValue*0.076
-                                break;
-                                case "Real":
-                                    var result = convertValue*0.30
-                                break;
-                                case "Rand":
-                                    var result = convertValue
-                                break;
-
-                            };
-                        break;
-   
+                                money.addEventListener('input', () => {
+                                // si la valeur entrée sera 1 et pas de texte autorisé
+                                while (isNaN(money.value)) {
+                                    money.value = 1
+                                }
+                                total.innerHTML = bitcoin * money.value
+        
+                                return i;
+                                })
+                            }
+                        })
+                    } else {
+                        console.log("erreur")
                     }
-                    result = result.toFixed(2)
-                    container.innerHTML = convertValue+" "+ tabOrigin[0]+ " est égal à "+ result +" "+tabConvert[0];
-                    // container.innerText ="La valeur sera convertie ici"
+                })
                     
-                    localStorage.setItem('monnaieDepart',tabOrigin[0] );
-                    localStorage.setItem('monnaieFinal',tabConvert[0] );
-
-                }
-    
-            }else if (valeur.value <0){
-                container.innerText = "Veuillez entrer une valeur positive"
-            }else{
-                container.innerText = "Je n'ai pas de valeur à convertir"
-                // afficher un message si la valeur est nég ou =0
-            }
-            
-        })
-
-
     </script>
 </body>
-</html>
