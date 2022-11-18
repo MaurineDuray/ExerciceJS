@@ -88,6 +88,7 @@
             bestTime.innerHTML="Actuellement, votre meilleur temps est de : "+temps
         }
        
+        // fonction chrono
         const defilerTemps = ()=>{
             if(estArrete) return
 
@@ -132,7 +133,6 @@
                 clearTimeout(timeout)
             }
         }
-
         const reset = ()=>{
             chrono.textContent ="00:00:00"
             estArrete =true
@@ -140,7 +140,6 @@
             minutes =0
             secondes =0
             clearTimeout(timeout)
-
         }
         const demarrer = () =>{
             if(estArrete){
@@ -149,11 +148,12 @@
             }
         }
         
-     
+        //fonction pour recommencer le jeu
         function recommence(){
             window.location.reload()
         }
 
+        //fonction qui mélange les cases
         function mix(){
             for (let i = 0; i < valeurs.length; i++) {
             let j = Math.floor(Math.random() * valeurs.length); 
@@ -177,37 +177,31 @@
         }
 
         
-        
+        //au chargement 
         window.onload = function() {
-            
+            //mélanger le tableau ordre
             mix()
+            //construire le jeu d'après ce tableau ordre
             construct()
            
-        
-        
-       let choice = []
+            let choice = []
        
-            
-           
-            
             let carteImg = document.querySelectorAll('img')
             carteImg.forEach(element => {
                 element.setAttribute('vue', false)
                 element.src = "./images/dos.jpg"
-                
             });
 
             let j = 0
             let paire = 1
             carteImg.forEach(elem=>{
                 elem.addEventListener('click', function(){
-                   demarrer()
+                   demarrer()//démarre le chrono
                     
                     if(elem.getAttribute('vue')=='false'){
                         
                         //tant que je n'ai pas choisi deux cases je change l'attribut de la case en stay et je push la data de la cas choisie ds un tableau 
                         
-                            
                             let data = parseInt(elem.getAttribute('data'))
                             carteImg.forEach(element=>{
                                 let attri = elem.getAttribute('vue')
@@ -219,10 +213,6 @@
                         
                             j++
                         
-
-                        
-
-
                         //une fois que j=2 je compare les deux valeurs du tableau et si c'est égal pour chaque case qui a l'attribut stay deviendra true 
                         while(j==2){
                             if(j>2){
@@ -236,7 +226,6 @@
                                         element.setAttribute('vue',true)
                                     }
 
-                                        
                                         point.innerHTML = "Nombre de paires trouvées : "+paire
                                         console.log(paire +' paire(s) trouvée(s)')
                                 //initialisation du nombre de paires trouvées 
@@ -252,6 +241,7 @@
                                     
                                     alert('vous avez terminé le jeu avec un temps de :'+myTime)
 
+                                    //stockage du temps
                                     if(localStorage.getItem('montemps')==null){
                                         localStorage.setItem('montemps',myTime)
                                     }else{

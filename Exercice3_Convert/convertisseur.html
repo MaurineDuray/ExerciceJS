@@ -219,12 +219,13 @@ class="form-control "
             }
 
 
-
+            //collecter les infos de l'url donné
             fetch(url)
                 .then(res=>{
                     if(res.ok){
                         res.json().then(data=>{
                             console.log(data)
+
 
                             for(const cle in data){
                                 if(cle === origine.value){
@@ -233,39 +234,43 @@ class="form-control "
                                 if(cle === final.value){
                                     monnaiefinale = data[cle].last
                                 }
+
                                 resultat.innerHTML = (monnaieorigine / monnaiefinale) * 1
 
+                                //écoute des input de choix de monnaie et changement du résultat en fonction
                                 final.addEventListener('change',() => {
                                     
                                         if(cle === final.value){
                                             monnaieorigine = data[cle].last
                                             resultat.innerHTML = ""
                                             resultat.innerHTML = (monnaieorigine / monnaiefinale)*montant.value 
-
+                                            //initiation des données stockées dans le localstorage
                                             localStorage.setItem('MonnaieFinale', final.value)
                                         }
                                         
                                     
                                 })
+
+                                //écoute des input de choix de monnaie et changement du résultat en fonction
                                 origine.addEventListener('change',() => {
                                     if(cle === origine.value){
                                         monnaiefinale = data[cle].last
                                         let calcul =  monnaiefinale / monnaieorigine
                                         resultat.innerHTML = ""
                                         resultat.innerHTML = calcul
-                                        
+                                        //initiation des données stockées dans le localstorage
                                         localStorage.setItem('MonnaieOrigine', origine.value)
                                     }
                                 })
                                 
                                 montant.addEventListener('input', () => {
-                                // si la valeur entrée sera 1 et pas de texte autorisé
-                                while (isNaN(montant.value)) {
-                                    montant.value = 1
-                                }
-                                resultat.innerHTML = monnaieorigine / monnaiefinale * montant.value
-        
-                                return i;
+                                    // si du texte est entré la valeur par défaut sera 1
+                                    while (isNaN(montant.value)) {
+                                        montant.value = 1
+                                    }
+                                    resultat.innerHTML = monnaieorigine / monnaiefinale * montant.value
+            
+                                    return i;
                                 })
 
                                 //convertisseur de bitcoin

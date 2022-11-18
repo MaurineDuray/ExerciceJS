@@ -107,8 +107,10 @@
         
         <script type="text/javascript">
             
+            //définition de la zone de parallax
             const zoneParallax = document.querySelectorAll('.cadre')
             
+            //sélection de chaque couche du parrallax
             zoneParallax.forEach(zone=>{
                 const parallax = zone.querySelectorAll('.parallax')
                 
@@ -117,6 +119,7 @@
                     top:0
                 }
 
+                //au mouvement de la souris récupérer la position de celle-ci et attribuer les positions des couches
                 window.addEventListener('mousemove',e=>{
                     move.left = (e.pageX-zone.offsetLeft) / zone.offsetWidth * 2 - 1
                     move.top = (e.pageY-zone.offsetTop) / zone.offsetHeight * 2 - 1
@@ -124,9 +127,8 @@
                     moveOBJ()
                 })
 
-
+                //récupération des données et calcul des mouvements et des positions
                 const moveOBJ = () => {
-
                     parallax.forEach(elem=>{
                         const deltaX = parseFloat(elem.getAttribute('data-move-x'))
                         const deltaY = parseFloat(elem.getAttribute('data-move-y'))
@@ -140,6 +142,7 @@
                 moveOBJ()
             })
 
+            // gestion de l'oiseau
             let bird = document.querySelector('#oiseau')
             let rotate = "45deg"
             let marginLeft = '100px'

@@ -82,10 +82,7 @@
         <h1>Jeu du taquin</h1>
         <h4>Faites glisser les cases pour jouer...</h4>
         <div class="model"></div>
-        <div class="game">
-
-
-        </div>
+        <div class="game"></div>
         <div id="appuyer"><strong>APPUYEZ SUR START POUR COMMENCER</strong></div>
         <div><button id="pause">PAUSE</button></div>
         <div>Nombre de coups: <span id="coups"></span></div>
@@ -94,10 +91,9 @@
     </div>
 
     <script>
-//chrono
+    //chrono
     let pause = document.querySelector('#pause')
    
-    
     let chrono = document.querySelector('.chrono')
     let secondes = 0
     let minutes = 0
@@ -114,8 +110,7 @@
             bestTime.innerHTML="Actuellement, votre meilleur temps est de : "+temps
         }
 
-     //function du chrono
-
+     //functions du chrono
      const defilerTemps = ()=>{
         if(estArrete) return
 
@@ -151,10 +146,11 @@
         //insertion des nouvelles valeur dans l'html avec textContent
 
         timeout = setTimeout(defilerTemps,1000)
-        // Explication setTimeout(): permet de définir un minuteur qui exécute une fonction (ici defilerTemps) ou un code donné après la fin du délai indiqué (1000)
+        // Explication setTimeout(): permet de définir un minuteur qui exécute une fonction (ici defilerTemps)
 
     }
 
+    //arrêter le chrono
     const arreter = ()=>{
         if(!estArrete){
             estArrete = true
@@ -162,6 +158,7 @@
         }
     }
 
+    //remettre le chrono à zéro
     const reset = ()=>{
         chrono.textContent ="00:00:00"
         estArrete =true
@@ -171,16 +168,18 @@
         clearTimeout(timeout)
 
     }
+
+    //redémarrer le chrono
     const demarrer = () =>{
         if(estArrete){
             estArrete =false
             defilerTemps()
         }
     }
- //fin function chrono
+    //fin function chrono
 
     
-  
+    
     let appuie = document.querySelector('#appuyer')
     var ligne = 4
     var colonne = 4
@@ -195,8 +194,7 @@
 
     let game = document.querySelector('.game')
 
-    
-
+    //au chargement de la page
     window.onload = function(){
 
         let ordre = ["16","4","5","9","10","14","1","15","2","7","3","12","6","8","11","13"]
@@ -208,7 +206,10 @@
             
             for(let c = 0; c<colonne ; c++){
                 const carre = document.createElement('img')
-                carre.id = l.toString()+" - "+c.toString() //id="0-1" numero de ligne-numero de colonne
+                carre.id = l.toString()+" - "+c.toString() 
+                //id="0-1" numero de ligne-numero de colonne
+                //toString() = renvoie une chaîne de caractères représentant l'objet
+               
                 carre.src = "images/"+ordre.shift()+".jpg"
 
                 //étapes du drag and drop pour échanger les images 
@@ -226,6 +227,7 @@
     
     }
 
+    //mettre le chrono en pause et le redémarrer - gestion du bouton pause 
     pause.addEventListener('click',function(){
         let content = pause.textContent
         console.log(content)
@@ -241,26 +243,21 @@
 
     })
 
+    //fonctions du déplacement de cases
     function dragStart(){
         caseClic = this
-    }
-       
+    }  
     function dragOver(e){
         e.preventDefault();
-    }
-        
+    }        
     function dragEnter(e){
         e.preventDefault()
     }
-
     function dragLeave(){
-
     }
-
     function dragDrop(){
         caseTarget = this;
     }
-
     function dragEnd(){
         if(!caseTarget.src.includes("16.jpg")){
             return;
@@ -268,11 +265,13 @@
 
         let clicCoords = caseClic.id.split("-")
         let l = parseInt(clicCoords[0])
-        let c = parseInt(clicCoords[1]) // obtenir les coordonnées de la case cliquée
+        let c = parseInt(clicCoords[1]) 
+        // obtenir les coordonnées de la case cliquée
 
         let targetCoords = caseTarget.id.split("-")
         let l2 = parseInt(targetCoords[0])
-        let c2 = parseInt(targetCoords[1]) // obtenir les coordonnées de la case sur laquelle on glisse la case cliquée
+        let c2 = parseInt(targetCoords[1]) 
+        // obtenir les coordonnées de la case sur laquelle on glisse la case cliquée
 
         let mouvGauche = l==l2 && c2==c-1 // bouge à gauche si les cases sont sur la même ligne et que le n° colonne de target = n° colonne de clic-1
         let mouvDroite = l==l2 && c2==c+1// bouge à droite si les cases sont sur la même ligne et que le n° colonne de target = n° colonne de clic+1
@@ -292,6 +291,7 @@
             demarrer()
             pause.innerHTML="PAUSE"
 
+            //gestion du nombre de coups
             coups += 1;
             document.querySelector("#coups").innerHTML = coups
         }
@@ -301,6 +301,7 @@
         
         grilles.forEach(grille=>{
             let place = grille.src.split('/images/')
+            //la fonction split sépare la chaine de caractère en sous chaine
             console.log("place :"+ place)
             let nb = place[1].split('.')
             console.log("nb :"+nb)

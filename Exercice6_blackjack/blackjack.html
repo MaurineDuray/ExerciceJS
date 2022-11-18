@@ -63,12 +63,6 @@
     </div>
 
     <script>
-
-        // inspiration d'un tutoriel + adaptaion pour la mise 
-
-       
-
-        
         let mymise = document.querySelector('#mise')
         
         console.log("mise"+mise)
@@ -100,7 +94,7 @@
 
         var okePioche = true
 
-       
+        //écoute de l'input d'entrée de la mise
         mymise.addEventListener('change', function(){
             mise = parseInt(mise.value)
             if(mise>0){
@@ -113,7 +107,7 @@
         })    
             
             
-           
+        //construction du jeu 
         function constructJeu() {
             let valeurs = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] //valeurs des cartes 
             let types = ["C", "D", "H", "S"] //types des cartes
@@ -128,6 +122,7 @@
             // console.log(jeu);
         }
         
+        //mélange des cartes
         function mix() {
             for (let i = 0; i < jeu.length; i++) {
                 let j = Math.floor(Math.random() * jeu.length); 
@@ -137,6 +132,7 @@
             }
             console.log(jeu);
         }
+        
         
         function jouer(){
             hidden = jeu.pop() //supprime la dernière valeur du tableau 
@@ -168,10 +164,12 @@
                 document.getElementById("your-cards").append(carteImg) //lie la carte à la div
             }
             console.log(maSomme)
+            console.log(monCompte)
 
             document.getElementById("pioche").addEventListener('click', pioche)
             document.getElementById("tapis").addEventListener('click', stay)
         }
+
 
         function pioche(){
             if(!okePioche){
@@ -182,7 +180,7 @@
             let card = jeu.pop() //on supprime la carte du jeu 
             carteImg.src = "./images/"+card+".png" //initialisation de la source de l'image
             maSomme += getValue(card) //obtenir la valeur de la carte 
-            monCompte += asControl(card) 
+            // monCompte += asControl(card) 
             document.getElementById("your-cards").append(carteImg) //lie la carte à la div
 
             if(reduceAce(maSomme, monCompte) > 21){
@@ -191,14 +189,17 @@
 
         }
 
+
         function stay(card){ 
             ordiSomme =reduceAce(ordiSomme, ordiCompte)
             maSomme = reduceAce(maSomme, monCompte)
 
-            okePioche = false
+            okePioche = false //je ne peux plus piocher après avoir déclaré tapis
 
             document.getElementById('hidden').src = "./images/"+hidden+".png"
+            //"retournement" de la carte cachée
 
+            //initiation des messages de résultat et calcul du portefeuille
             let message= ""
             if (maSomme >21){
                 message = "Vous perdez ! "
@@ -217,6 +218,7 @@
                 portefeuille = portefeuille-mise
             }
 
+            // stockage du portefeuille
             localStorage.setItem('portefeuilleBJ',portefeuille)
             console.log("portefeuille:"+portefeuille)
             document.getElementById("argent").innerHTML = portefeuille+"€"
@@ -228,6 +230,7 @@
             recommence()
         }
 
+        //reload le jeu avec mise à jour du portefeuille après un certain temps une fois la partie finie
         function recommence(){
             setInterval(()=>{
                 window.location.reload()
@@ -247,6 +250,7 @@
             return parseInt(value);  // retourne la valeur de la carte
         }
 
+        // Fonction qui controle si la carte piochée est un as 
         function asControl(card){
             if(card[0]=="A"){
                 return 1;
@@ -254,6 +258,7 @@
             return 0
         }
 
+        //Calcul de la valuer de l'as
         function reduceAce(maSomme, monCompte){ // règle si j'excède 21 l'as vaut 1
             while(maSomme > 21 && monCompte >0){
                 maSomme -=10
