@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body{
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        #appManip{
+            height: 100vh;
+            width: 100vw;
+            user-select: none ;
+            overflow: hidden;
+        }
+        .manip{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            max-width: 70%;
+            max-height: 70%;
+            transform: translateX(-50%, -50%);
+
+           
+            -webkit-user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="appManip">
+        <img src="images/tj-holowaychuk-iGrsa9rL11o-unsplash.jpg" alt="" class="manip">
+    </div>
+    <script>
+        const app = document.querySelector('#appManip')
+        const manip = app.querySelector(".manip")
+
+        let press = false
+        let method = null // "move", "zoom", "rotate"
+
+       
+
+        app.addEventListener('mousedown',(e)=>{
+            console.log("app",e)
+            setPos(e)
+            press = true
+            method = "rotate"
+        })
+
+        manip.addEventListener('mousedown',(e)=>{
+            e.stopPropagation()
+            setPos(e)
+            press =true
+            method =null
+        })
+
+        app.addEventListener('mouseup',(e)=>{
+           press =false
+           method= null
+           rotate = rotateTemp
+           moveX = moveXTemp
+           moveY = moveYTemp
+        })
+
+        app.addEventListener('mousemove',(e)=>{
+            if(method=="rotate") rotateImage(e)
+            if(method=="move") rotateImage(e)
+        })
+
+        let mouseX, mouseY, moveX = 50, moveY =50, rotate=0 , rotateTemp= 0, moveXTemp =0, moveYTemp=0
+        const setPos = (e)=>{
+            mouseX = e.pageX
+            mouseY = e.pageY
+        } 
+        
+        const rotateImage = () => {
+            var box = manip.getBoundingClientRect()
+            const x = box.width/2 + box.left
+            const y = box.height/2 + box.top
+
+            let radianInit = Math.atan2(mouseX-x,mouseY-y)
+            let rotationInit = -radianInit*180/Math.PI+90
+
+            let radian = Math.atan2(e.pageX-x, e.pageY-y)
+            let rotation = -radian*180/Math.PI+90-rotationInit
+
+            manip.style.transform = 'translate(-50%,-50%) rotate(${rotation+rotate}deg)'
+            
+            rotateTemp = rotation +rotate
+        }
+
+        const moveImage = (e) => {
+            var box = manip.getBoundingClientRect()
+            const x = box.width/2 + box.left
+            const y = box.height/2 + box.top
+
+            const movingX = (e.pageX - mouseX)/window.innerWidth
+            const movingY = (e.pageY - mouseY)/window.innerHeight
+
+            manip.style.left = `${moveX + movingX}%`
+            manip.style.right = `${moveY + movingY}%`
+
+            console.log(movingX,movingY)
+        }
+    </script>
+</body>
+</html>

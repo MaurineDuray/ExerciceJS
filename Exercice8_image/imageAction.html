@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImageManip</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
         body{
             width: 100%;
             overflow: hidden;
@@ -44,6 +48,7 @@
             justify-content: center;
             color: white;
             height: 70px;
+            margin-top: 150px;
         }
         
         .tourne img{
@@ -56,12 +61,15 @@
         .tourne p{
             margin-top: 10px;
         }
-        
+        .head{
+            position: absolute;
+            z-index: 1500;
+        }
     </style>
 </head>
 <body>
-    <div>
-		<h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: -40px; left:20px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+    <div class="head">
+		<h1 style="margin-top: 0; width :100vw;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: -40px; left:20px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
 	</div>
    
     <div class="tourne">

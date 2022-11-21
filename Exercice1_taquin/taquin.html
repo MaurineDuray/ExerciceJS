@@ -55,6 +55,19 @@
             margin-top: 20px;
             margin-bottom: 10px;
         }
+        #mix{
+            width: 40%;
+            background-color: rgb(255, 163, 5);
+            color: black;
+            height: 30px;
+            border: none;
+            border-radius: 50px;;
+            font-weight: bold;
+            font-size: 20pt;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
         .model{
             width: 200px;
             height: 200px;
@@ -84,6 +97,7 @@
         <div class="model"></div>
         <div class="game"></div>
         <div id="appuyer"><strong>APPUYEZ SUR START POUR COMMENCER</strong></div>
+        <div><button id="mix">Mélanger</button></div>
         <div><button id="pause">PAUSE</button></div>
         <div>Nombre de coups: <span id="coups"></span></div>
         <div class="bestTime"></div>
@@ -93,7 +107,8 @@
     <script>
     //chrono
     let pause = document.querySelector('#pause')
-   
+    let mix = document.querySelector('#mix')
+
     let chrono = document.querySelector('.chrono')
     let secondes = 0
     let minutes = 0
@@ -190,17 +205,27 @@
     var coups = 0
     let bonOrdre = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"]
     //let ordre = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","16","15"]
-    let ordre = ["16","4","5","9","10","14","1","15","2","7","3","12","6","8","11","13"]
-
+    
+    
     let game = document.querySelector('.game')
-
+    let ordre = ["16","4","5","9","10","14","1","15","2","7","3","12","6","8","11","13"]
+    
+    
     //au chargement de la page
-    window.onload = function(){
+    function load(){
 
-        let ordre = ["16","4","5","9","10","14","1","15","2","7","3","12","6","8","11","13"]
+        
         game.innerHTML=""
         appuie.innerHTML=""
         demarrer() // démarre le chrono
+
+        let ordre=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","16","15"]
+        for (let i = 0; i < ordre.length; i++) {
+            let j = Math.floor(Math.random() * ordre.length); 
+            let temp = ordre[i];
+            ordre[i] = ordre[j];
+            ordre[j] = temp; //échange des cartes pour les mélanger
+        }
 
         for(let l=0; l<ligne ;l++){
             
@@ -209,9 +234,9 @@
                 carre.id = l.toString()+" - "+c.toString() 
                 //id="0-1" numero de ligne-numero de colonne
                 //toString() = renvoie une chaîne de caractères représentant l'objet
-               
+                
                 carre.src = "images/"+ordre.shift()+".jpg"
-
+                
                 //étapes du drag and drop pour échanger les images 
                 carre.addEventListener('dragstart', dragStart)
                 carre.addEventListener('dragover', dragOver)
@@ -224,9 +249,10 @@
             }
             
         }
-    
+        
     }
-
+    
+    load()
     //mettre le chrono en pause et le redémarrer - gestion du bouton pause 
     pause.addEventListener('click',function(){
         let content = pause.textContent
@@ -242,6 +268,13 @@
         
 
     })
+
+    mix.addEventListener('click', function(){
+        
+        load()
+        console.log(ordre)
+    })
+
 
     //fonctions du déplacement de cases
     function dragStart(){
