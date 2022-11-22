@@ -110,7 +110,7 @@
     
     
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+   
     <script type="text/javascript">
        
         let form = document.querySelector('.formulaire')
@@ -173,7 +173,7 @@
                     let error = true
                     
                 }else{
-
+                    let error = false
                     resultat.innerHTML= ''
 
                     //stockage de la commande
@@ -183,11 +183,43 @@
                     //stockage des coordonnées
                     localStorage.setItem('coordonnées', JSON.stringify(coord))
 
+                    //envoi des données (requête)
+                    
+                        console.log('aucune erreur')
+                        let data = {
+                                id : id,
+                                date :  date,
+                                name :  name,
+                                adresse:  adresse,
+                                cp:  cp,
+                                ville: ville,
+                                produits: tab,
+                        }
+
+                        const submitDatas = (datas, url) => {
+                            var FD = new FormData()
+                            for(name in data){
+                                FD.append(name, datas[name])
+                            }
+                            var XHR = new XMLHttpRequest()
+                            XHR.addEventListener('load',e=>{
+                                console.log(e)
+                            })
+                            XHR.addEventListener('error',e=>{
+                                console.log(e)
+                            })
+                            XHR.open('POST',url)
+                            XHR.send(FD)
+                        }   
+                    
+                        submitDatas(data, 'response.php')
+
                     //setting du ticket
                     document.querySelector('.formulaire h1').innerHTML = "Votre ticket"
                     document.querySelector('#Cid').innerHTML="Numéro de commande: "+id
                     document.querySelector('#Cdate').innerHTML = "Date de la commande: "+date
-                    document.querySelector('#Cname').innerHTML = "Client: "+name
+                    document.querySelector('#Cname').innerHTML = "Client: "+coord[2]
+                    
                     document.querySelector('#Cadresse').innerHTML = "Rue: "+adresse
                     document.querySelector('#Ccp').innerHTML = "Code postal: "+cp
                     document.querySelector('#Cville').innerHTML = "Ville: "+ville
@@ -212,18 +244,6 @@
                     form.style.border = "1px solid black"
                     form.style.width= "40%"
                     form.style.paddingBottom = "25px"
-
-                    //envoi des données ajax
-                    // var xhr = new XMLHttpRequest();
-                    // xhr.onreadystatechange = function() {
-                    //         console.info(xhr);
-                    //     if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-                    //         console.info("ok");
-                    //     }
-                    // };
-
-                    
-
 
                     //repasser une commande
                     btn.addEventListener('click',()=>{
