@@ -153,6 +153,7 @@
                 let inputs = document.getElementsByTagName('input')
                 let produits = document.querySelectorAll('.prod')
                 let i =0
+                let sum = 0
                 produits.forEach(element => {
                     tab[i] = new Array()
                     let quant = element.querySelector('.quant')
@@ -161,7 +162,9 @@
                     tab[i][1]= name.value
                     let prix = element.querySelector('.prix')
                     tab[i][2]= prix.value+"€"
+                    sum = sum + (parseInt(tab[i][0])*parseInt(tab[i][2]))
                     i++
+                    
                 });
                 
                 //contrôle si le form est bien rempli
@@ -173,6 +176,7 @@
                     let error = true
                     
                 }else{
+                    console.log(sum)
                     let error = false
                     resultat.innerHTML= ''
 
@@ -223,8 +227,9 @@
                     document.querySelector('#Cadresse').innerHTML = "Rue: "+adresse
                     document.querySelector('#Ccp').innerHTML = "Code postal: "+cp
                     document.querySelector('#Cville').innerHTML = "Ville: "+ville
-                    document.querySelector("h3").innerHTML = "Vos produits commandés :"
-
+                    document.querySelector("h3").innerHTML = `Vos produits commandés :
+                    <br>À payer : ${sum} €`
+                    
                     //affichage des produits dans le ticket
                     let bon = JSON.parse(localStorage.getItem('commande'))
                     let compte = bon.length
