@@ -1,0 +1,220 @@
+<html>
+    <head>
+        <title>Parallax</title>
+        
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                padding: 0;
+                margin: 0;
+            }
+            
+            .cadre{
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+            }
+            .zoneParallax{
+                width: 280vh;
+                height: 140vh;
+                position: absolute;
+                left: 50%;
+                top: 100%;
+                transform: translate(-50%,-100%);
+                overflow: hidden;
+                background: #eee;
+            }
+            
+            .zoneParallax .parallax{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                
+                transition: 0.1s linear;
+                transition-property: left,top;
+                
+            }
+            .zoneParallax .parallax img{
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .zoneParallax .obj2{
+                width: calc(80% * 1.0);
+                height: calc(100% * 1.0);
+                z-index: 150;
+            }
+            .zoneParallax .obj3{
+                width: calc(200% * 1.0);
+                height: calc(200% * 1.0);
+            }
+            .zoneParallax .obj4{
+                width: calc(95% * 1.0);
+                height: calc(70% * 1.0);
+            }
+            .zoneParallax .obj5{
+                width: calc(100% * 1.0);
+                height: calc(100% * 1.0);
+                
+            }
+            .zoneParallax .obj6{
+                width: calc(100% * 1.0);
+                height: calc(100% * 1.0);
+            }
+            .zoneParallax .obj7{
+                width: calc(75% * 1.0);
+                height: calc(100% * 1.0);
+                z-index: 95;
+            }
+            .zoneParallax .obj8{
+                width: calc(80% * 1.0);
+                height: calc(100% * 1.0);
+                z-index: 1000;
+            }
+
+            .moulin {
+                position: absolute!important;
+                z-index: 4000 !important;
+                width: 100px !important;
+                height: 100px !important;
+               
+                margin-top: 33%;
+                margin-left: 22%;
+                transform-origin: center center ;
+                transition: all 20s;
+                cursor: pointer ;
+            }
+            #animate{
+                width: 200px;
+                height: 30px;
+                border: 1px solid rgb(0, 128, 255);
+                border-radius: 20px;
+                background-color: transparent;
+                position: absolute;
+                margin-left: 50%;
+                transform: translateX(-50%);
+                margin-top: 20px;
+                z-index:10000;
+                cursor: pointer;
+            }
+
+            .soir{
+                height: 100vh;
+                width: 100vw;
+                background-color:rgba(5, 0, 32, 0);
+                position: absolute;
+                top: 150px;
+                left: 0;
+                z-index: 4500;
+                transition: all 20s;
+            }
+            
+
+        </style>
+        
+    </head>
+    <body>
+        <div>
+            <h1 style="margin-top: 0; width :100%;height: 150px; background-color:black; text-align: center; color:white; line-height: 150px;"><a style=" color:white; font-size: 15pt; position: absolute; top: -40px; left:20px" href="https://duray.info/ExercicesJS/"> <<< Retour </a>Exercices JS </h1>
+        </div>
+        <button id="animate">Animer</button>
+        <div class="soir"></div>
+        <div class="cadre">
+            <img class="moulin" src="images-para/moulin.png" alt="">
+            <div class="zoneParallax">
+                
+                
+                <div class="parallax obj2" data-move-x="0" data-move-y="0"  data-x="53" data-y="62">
+                    <img src="images-para/batiments.png"/></div>
+                <div class="parallax obj3" data-move-x="-2" data-move-y="-1.5"  data-x="55" data-y="53"><img src="images-para/arrière.png" /></div> 
+                <div class="parallax obj4" data-move-x="-3" data-move-y="-5" data-x="50" data-y="70"><img src="images-para/ciel.png" /></div>
+                <div class="parallax obj5" data-move-x="-9" data-move-y="-3"  data-x="42" data-y="80"><img src="images-para/nuages.png" /></div>
+                <div class="parallax obj6" data-move-x="-2" data-move-y="-1" data-x="50" data-y="70"><img src="images-para/plan3.png" /></div>
+                <div class="parallax obj7" data-move-x="-6" data-move-y="0"  data-x="53" data-y="65"><img src="images-para/plan2.png" /></div>
+                <div class="parallax obj8" data-move-x="-3" data-move-y="0" data-x="50" data-y="60"><img src="images-para/plan1.png" /></div>
+                
+            </div>
+
+           
+
+        </div>
+        
+        <script type="text/javascript">
+            
+            //définition de la zone de parallax
+            const zoneParallax = document.querySelectorAll('.cadre')
+            
+            //sélection de chaque couche du parrallax
+            zoneParallax.forEach(zone=>{
+                const parallax = zone.querySelectorAll('.parallax')
+                
+                const move = {
+                    left:0,
+                    top:0
+                }
+
+                //au mouvement de la souris récupérer la position de celle-ci et attribuer les positions des couches
+                window.addEventListener('mousemove',e=>{
+                    move.left = (e.pageX-zone.offsetLeft) / zone.offsetWidth * 2 - 1
+                    move.top = (e.pageY-zone.offsetTop) / zone.offsetHeight * 2 - 1
+                    
+                    moveOBJ()
+                })
+
+                //récupération des données et calcul des mouvements et des positions
+                const moveOBJ = () => {
+                    parallax.forEach(elem=>{
+                        const deltaX = parseFloat(elem.getAttribute('data-move-x'))
+                        const deltaY = parseFloat(elem.getAttribute('data-move-y'))
+                        const x = parseFloat(elem.getAttribute('data-x'))
+                        const y = parseFloat(elem.getAttribute('data-y'))
+                        elem.style.left = x + move.left*deltaX + "%"
+                        elem.style.top = y + move.top*deltaY + "%"
+                    })
+
+                }
+                moveOBJ()
+            })
+
+            // gestion du moulin
+            let degre = 3650
+            let moulin = document.querySelector('.moulin')
+            moulin.addEventListener('click', function(){
+                console.log('moulin')
+                moulin.style.transform="rotate("+degre+"deg)";
+                
+            })
+            
+           
+            let animer = document.querySelector('#animate')
+            let nuages = document.querySelector('.obj5')
+            let soir = document.querySelector('.soir')
+            animer.addEventListener('click', function(){
+                moulin.style.transform="rotate("+degre+"deg)";
+                nuages.style.marginLeft="500px"
+                nuages.style.transition = "all 20s"
+                soir.style.backgroundColor= "rgba(5, 0, 32, 0.999)"
+                
+            })
+            animer.addEventListener('mouseover', function(){
+                animer.style.backgroundColor = "blue"
+                animer.style.color = "white"
+
+            })
+            animer.addEventListener('mouseout', function(){
+                animer.style.backgroundColor = "transparent"
+                animer.style.color = "blue"
+            })
+            
+
+            
+            
+            
+        </script>
+    </body>
+</html>
